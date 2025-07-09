@@ -71,30 +71,19 @@ const ChatbotPage = () => {
       >
         <div>
           <motion.h1 
-            className="text-3xl font-bold text-[#00FFFF] mb-2"
-            style={{
-              textShadow: '0 0 10px rgba(0, 255, 255, 0.8)',
-            }}
-            animate={{
-              textShadow: [
-                '0 0 10px rgba(0, 255, 255, 0.8)',
-                '0 0 20px rgba(0, 255, 255, 1)',
-                '0 0 10px rgba(0, 255, 255, 0.8)',
-              ],
-            }}
-            transition={{ duration: 3, repeat: Infinity }}
+            className="text-3xl font-bold text-[#FFFFFF] mb-2"
           >
             AI Terminal
           </motion.h1>
-          <p className="text-gray-400">High-tech AI assistant interface</p>
+          <p className="text-[#9CA3AF]">High-tech AI assistant interface</p>
         </div>
         <motion.div
-          className="flex items-center gap-2 px-4 py-2 bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-xl text-[#00FFFF] font-medium"
+          className="flex items-center gap-2 px-4 py-2 bg-rgba(31, 41, 55, 0.3) backdrop-blur-[12px] border border-[#00BFFF]/30 rounded-xl text-[#00BFFF] font-medium"
           animate={{
             boxShadow: [
-              '0 0 20px rgba(0, 255, 255, 0.2)',
-              '0 0 30px rgba(0, 255, 255, 0.4)',
-              '0 0 20px rgba(0, 255, 255, 0.2)',
+              '0 0 15px rgba(0, 191, 255, 0.2)',
+              '0 0 25px rgba(0, 191, 255, 0.4)',
+              '0 0 15px rgba(0, 191, 255, 0.2)',
             ],
           }}
           transition={{ duration: 2, repeat: Infinity }}
@@ -116,15 +105,17 @@ const ChatbotPage = () => {
         className="relative group"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-[#E42289]/10 to-[#00FFFF]/10 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#00BFFF]/10 to-[#39FF14]/10 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500" />
         <motion.div 
-          className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-3xl shadow-2xl overflow-hidden h-[600px] flex flex-col"
+          className="relative bg-rgba(31, 41, 55, 0.3) backdrop-blur-[12px] border border-[#00BFFF]/30 rounded-3xl shadow-2xl overflow-hidden h-[600px] flex flex-col"
           whileHover={{
-            boxShadow: '0 0 40px rgba(0, 255, 255, 0.3)',
-            borderColor: 'rgba(0, 255, 255, 0.6)'
+            boxShadow: '0 0 30px rgba(0, 191, 255, 0.2)',
+            borderColor: 'rgba(0, 191, 255, 0.6)'
           }}
         >
           {/* Terminal Header */}
           <div className="p-4 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white relative overflow-hidden">
+          <div className="p-4 bg-[#1F2937] text-white relative overflow-hidden border-b border-[#00BFFF]/30">
             {/* Animated Scanlines */}
             <motion.div
               className="absolute inset-0 pointer-events-none"
@@ -149,43 +140,43 @@ const ChatbotPage = () => {
             
             <div className="relative z-10 flex items-center gap-3">
               <motion.div 
-                className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center"
+                className="w-10 h-10 bg-rgba(31, 41, 55, 0.5) backdrop-blur-sm rounded-full flex items-center justify-center border border-[#00BFFF]/30"
                 animate={{
                   boxShadow: [
-                    '0 0 20px rgba(255, 255, 255, 0.3)',
-                    '0 0 30px rgba(255, 255, 255, 0.6)',
-                    '0 0 20px rgba(255, 255, 255, 0.3)',
+                    '0 0 10px rgba(0, 191, 255, 0.3)',
+                    '0 0 20px rgba(0, 191, 255, 0.6)',
+                    '0 0 10px rgba(0, 191, 255, 0.3)',
                   ],
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <Terminal className="w-5 h-5" />
+                <Terminal size={20} className="text-[#00BFFF]" />
               </motion.div>
               <div>
-                <h3 className="font-semibold">CallEase Neural Interface</h3>
+                <h3 className="font-semibold text-[#FFFFFF]">CallEase Neural Interface</h3>
                 <div className="flex items-center gap-2 text-sm opacity-90">
                   <motion.div
-                    className="w-2 h-2 bg-white rounded-full"
+                    className="w-2 h-2 bg-[#39FF14] rounded-full"
                     animate={{
                       scale: [1, 1.2, 1],
                       opacity: [1, 0.7, 1],
                     }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                   />
-                  <span>System Online</span>
+                  <span className="text-[#D1D5DB]">System Online</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Messages Area */}
-          <div className="flex-1 p-4 overflow-y-auto bg-[#0C0A1D] relative">
+          <div className="flex-1 p-4 overflow-y-auto bg-[#111827] relative">
             {/* Terminal Grid Background */}
             <div className="absolute inset-0 opacity-10">
               <svg width="100%" height="100%">
                 <defs>
-                  <pattern id="terminalGrid" width="20" height="20" patternUnits="userSpaceOnUse">
-                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#00FFFF" strokeWidth="0.5"/>
+                  <pattern id="terminalGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+                    <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#00BFFF" strokeWidth="0.3"/>
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#terminalGrid)" />
@@ -207,15 +198,15 @@ const ChatbotPage = () => {
                     <motion.div 
                       className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-xs font-bold ${
                         message.type === 'user' 
-                          ? 'bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white' 
-                          : 'bg-rgba(22, 21, 48, 0.8) border border-[#00FFFF]/30 text-[#00FFFF]'
+                          ? 'bg-gradient-to-r from-[#00BFFF] to-[#39FF14] text-white' 
+                          : 'bg-rgba(31, 41, 55, 0.8) border border-[#00BFFF]/30 text-[#00BFFF]'
                       }`}
                       whileHover={{ scale: 1.1 }}
                       animate={message.type === 'bot' ? {
                         boxShadow: [
-                          '0 0 10px rgba(0, 255, 255, 0.3)',
-                          '0 0 20px rgba(0, 255, 255, 0.6)',
-                          '0 0 10px rgba(0, 255, 255, 0.3)',
+                          '0 0 8px rgba(0, 191, 255, 0.3)',
+                          '0 0 16px rgba(0, 191, 255, 0.6)',
+                          '0 0 8px rgba(0, 191, 255, 0.3)',
                         ],
                       } : {}}
                       transition={{ duration: 2, repeat: Infinity }}
@@ -228,12 +219,12 @@ const ChatbotPage = () => {
                     </motion.div>
                     <div className={`p-3 rounded-lg font-mono text-sm relative ${
                       message.type === 'user'
-                        ? 'bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white'
-                        : 'bg-rgba(22, 21, 48, 0.8) border border-[#00FFFF]/30 text-[#00FFFF]'
+                        ? 'bg-gradient-to-r from-[#00BFFF] to-[#39FF14] text-white'
+                        : 'bg-rgba(31, 41, 55, 0.8) border border-[#00BFFF]/30 text-[#39FF14]'
                     }`}>
                       {message.type === 'bot' && (
                         <motion.div
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-[#00FFFF]/10 to-transparent rounded-lg"
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-[#39FF14]/10 to-transparent rounded-lg"
                           animate={{ x: ['-100%', '100%'] }}
                           transition={{ 
                             duration: 3, 
@@ -247,6 +238,7 @@ const ChatbotPage = () => {
                       <p className="relative z-10">{message.content}</p>
                       <div className={`text-xs mt-1 opacity-60 ${
                         message.type === 'user' ? 'text-white' : 'text-[#00FFFF]'
+                        message.type === 'user' ? 'text-white' : 'text-[#00BFFF]'
                       }`}>
                         {message.timestamp.toLocaleTimeString()}
                       </div>
@@ -264,26 +256,26 @@ const ChatbotPage = () => {
                 >
                   <div className="flex items-start gap-3">
                     <motion.div 
-                      className="w-8 h-8 rounded-full flex items-center justify-center font-mono text-xs font-bold bg-rgba(22, 21, 48, 0.8) border border-[#00FFFF]/30 text-[#00FFFF]"
+                      className="w-8 h-8 rounded-full flex items-center justify-center font-mono text-xs font-bold bg-rgba(31, 41, 55, 0.8) border border-[#00BFFF]/30 text-[#00BFFF]"
                       animate={{
                         boxShadow: [
-                          '0 0 10px rgba(0, 255, 255, 0.3)',
-                          '0 0 20px rgba(0, 255, 255, 0.6)',
-                          '0 0 10px rgba(0, 255, 255, 0.3)',
+                          '0 0 8px rgba(0, 191, 255, 0.3)',
+                          '0 0 16px rgba(0, 191, 255, 0.6)',
+                          '0 0 8px rgba(0, 191, 255, 0.3)',
                         ],
                       }}
                       transition={{ duration: 1, repeat: Infinity }}
                     >
                       <Bot className="w-4 h-4" />
                     </motion.div>
-                    <div className="p-3 rounded-lg font-mono text-sm bg-rgba(22, 21, 48, 0.8) border border-[#00FFFF]/30 text-[#00FFFF]">
+                    <div className="p-3 rounded-lg font-mono text-sm bg-rgba(31, 41, 55, 0.8) border border-[#00BFFF]/30 text-[#39FF14]">
                       <div className="flex items-center gap-1">
                         <span>Processing</span>
                         <motion.div className="flex gap-1">
                           {[0, 1, 2].map((i) => (
                             <motion.div
                               key={i}
-                              className="w-1 h-1 bg-[#00FFFF] rounded-full"
+                              className="w-1 h-1 bg-[#39FF14] rounded-full"
                               animate={{
                                 scale: [1, 1.5, 1],
                                 opacity: [0.5, 1, 0.5],
@@ -306,7 +298,7 @@ const ChatbotPage = () => {
           </div>
 
           {/* Input Area */}
-          <div className="p-4 border-t border-[#00FFFF]/30 bg-rgba(22, 21, 48, 0.8)">
+          <div className="p-4 border-t border-[#00BFFF]/30 bg-rgba(31, 41, 55, 0.8)">
             <div className="flex gap-2">
               <div className="flex-1 relative">
                 <motion.textarea
@@ -314,15 +306,12 @@ const ChatbotPage = () => {
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Enter neural command..."
-                  className="w-full px-4 py-3 bg-[#0C0A1D] border border-[#00FFFF]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E42289] text-[#00FFFF] placeholder-gray-400 font-mono text-sm resize-none"
+                  className="w-full px-4 py-3 bg-[#111827] border border-[#00BFFF]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#39FF14] text-[#39FF14] placeholder-[#9CA3AF] font-mono text-sm resize-none"
                   rows="1"
-                  style={{
-                    textShadow: '0 0 5px rgba(0, 255, 255, 0.5)',
-                  }}
                 />
                 {/* Blinking Cursor Effect */}
                 <motion.div
-                  className="absolute top-3 right-4 w-2 h-5 bg-[#00FFFF]"
+                  className="absolute top-3 right-4 w-2 h-5 bg-[#39FF14]"
                   animate={{ opacity: [1, 0, 1] }}
                   transition={{ duration: 1, repeat: Infinity }}
                 />
@@ -332,12 +321,12 @@ const ChatbotPage = () => {
                 whileTap={{ scale: 0.95 }}
                 onClick={handleSendMessage}
                 disabled={!inputMessage.trim()}
-                className="px-6 py-3 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white rounded-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center gap-2"
+                className="px-6 py-3 bg-gradient-to-r from-[#00BFFF] to-[#39FF14] text-white rounded-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center gap-2"
                 animate={inputMessage.trim() ? {
                   boxShadow: [
-                    '0 0 20px rgba(228, 34, 137, 0.3)',
-                    '0 0 30px rgba(0, 255, 255, 0.3)',
-                    '0 0 20px rgba(228, 34, 137, 0.3)',
+                    '0 0 15px rgba(0, 191, 255, 0.3)',
+                    '0 0 25px rgba(57, 255, 20, 0.3)',
+                    '0 0 15px rgba(0, 191, 255, 0.3)',
                   ],
                 } : {}}
                 transition={{ duration: 2, repeat: Infinity }}

@@ -81,77 +81,50 @@ const Sidebar = ({ onNavigate }) => {
   }
 
   return (
-    <div className="w-full h-full relative overflow-hidden">
-      {/* Holographic Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#E42289] to-[#00FFFF] opacity-90" />
-      
-      {/* Animated Scanlines */}
+    <div className="w-full h-full relative bg-[#111827] border-r border-[#00BFFF] border-opacity-30">
+      {/* Energy Line */}
       <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: `repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 2px,
-            rgba(255, 255, 255, 0.05) 2px,
-            rgba(255, 255, 255, 0.05) 4px
-          )`
-        }}
+        className="absolute right-0 top-0 bottom-0 w-px bg-[#00BFFF]"
         animate={{
-          y: [0, 20, 0],
+          boxShadow: [
+            '0 0 5px rgba(0, 191, 255, 0.5)',
+            '0 0 15px rgba(0, 191, 255, 0.8)',
+            '0 0 5px rgba(0, 191, 255, 0.5)',
+          ],
         }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      />
-      
-      {/* Shimmering Effect */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"
-        animate={{
-          x: ['-100%', '100%'],
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          repeatDelay: 2,
-          ease: "linear"
-        }}
-        style={{ width: '50%' }}
+        transition={{ duration: 2, repeat: Infinity }}
       />
 
-      <div className="relative z-10 p-6 h-full">
+      <div className="p-6 h-full">
         {/* Logo Section */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-3 mb-8 p-4 rounded-xl bg-black/20 backdrop-blur-sm border border-white/20"
+          className="flex items-center gap-3 mb-8 p-4 rounded-xl bg-rgba(31, 41, 55, 0.3) backdrop-blur-[12px] border border-[#00BFFF]/30"
         >
           <motion.div
-            className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm"
+            className="w-10 h-10 bg-rgba(31, 41, 55, 0.5) backdrop-blur-[12px] rounded-lg flex items-center justify-center border border-[#00BFFF]/30"
             whileHover={{ scale: 1.1, rotate: 5 }}
             animate={{
               boxShadow: [
-                '0 0 20px rgba(255, 255, 255, 0.3)',
-                '0 0 30px rgba(255, 255, 255, 0.5)',
-                '0 0 20px rgba(255, 255, 255, 0.3)',
+                '0 0 10px rgba(0, 191, 255, 0.3)',
+                '0 0 20px rgba(0, 191, 255, 0.5)',
+                '0 0 10px rgba(0, 191, 255, 0.3)',
               ],
             }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <PhoneIncoming size={20} className="text-white" />
+            <PhoneIncoming size={20} className="text-[#00BFFF]" />
           </motion.div>
           <div>
-            <span className="text-xl font-bold text-white drop-shadow-lg">
+            <span className="text-xl font-bold text-[#FFFFFF]">
               CallEase
             </span>
             {user?.subscriptionPlan && (
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="px-2 py-1 bg-white/20 backdrop-blur-sm text-white text-xs font-bold rounded-full uppercase tracking-wider border border-white/30"
+                className="px-2 py-1 bg-rgba(31, 41, 55, 0.5) backdrop-blur-[12px] text-[#00BFFF] text-xs font-bold rounded-full uppercase tracking-wider border border-[#00BFFF]/30"
               >
                 {user.subscriptionPlan}
               </motion.div>
@@ -175,23 +148,30 @@ const Sidebar = ({ onNavigate }) => {
                   onClick={handleClick}
                   className={`group relative flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
                     active
-                      ? 'bg-black/20 backdrop-blur-sm text-white border border-white'
-                      : 'text-white/80 hover:text-white hover:bg-black/10 backdrop-blur-sm'
+                      ? 'text-[#FFFFFF]'
+                      : 'text-[#D1D5DB] hover:text-[#FFFFFF]'
                   }`}
                 >
-                  {/* Active Indicator */}
+                  {/* Active Indicator - Sharp Green Bar */}
                   {active && (
                     <motion.div
                       layoutId="activeIndicator"
-                      className="absolute inset-0 bg-white/10 rounded-xl border border-white/50"
+                      className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#39FF14] rounded-r-full"
                       initial={false}
                       transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      animate={{
+                        boxShadow: [
+                          '0 0 5px rgba(57, 255, 20, 0.5)',
+                          '0 0 15px rgba(57, 255, 20, 0.8)',
+                          '0 0 5px rgba(57, 255, 20, 0.5)',
+                        ],
+                      }}
                     />
                   )}
 
                   {/* Icon */}
                   <motion.div
-                    className={`relative z-10 ${active ? 'text-white' : 'text-white/80 group-hover:text-white'}`}
+                    className={`relative z-10 ${active ? 'text-[#FFFFFF]' : 'text-[#D1D5DB] group-hover:text-[#00BFFF]'}`}
                     whileHover={{ scale: 1.1 }}
                     animate={active ? {
                       filter: [
@@ -207,29 +187,18 @@ const Sidebar = ({ onNavigate }) => {
 
                   {/* Text */}
                   <span className={`relative z-10 font-medium ${
-                    active ? 'text-white' : 'group-hover:text-white'
+                    active ? 'text-[#FFFFFF]' : 'group-hover:text-[#FFFFFF]'
                   }`}>
                     {link.name}
                   </span>
 
                   {/* Hover Effect */}
                   <motion.div
-                    className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    className="absolute inset-0 bg-rgba(31, 41, 55, 0.2) rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     whileHover={{
-                      boxShadow: '0 0 20px rgba(255, 255, 255, 0.1)',
+                      boxShadow: '0 0 15px rgba(0, 191, 255, 0.1)',
                     }}
                   />
-
-                  {/* Active Glow */}
-                  {active && (
-                    <motion.div
-                      className="absolute -inset-1 bg-white/20 rounded-xl blur-sm -z-10"
-                      animate={{
-                        opacity: [0.5, 1, 0.5],
-                      }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-                  )}
                 </Link>
               </motion.div>
             );
@@ -241,23 +210,23 @@ const Sidebar = ({ onNavigate }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="mt-6 p-4 rounded-xl bg-black/20 backdrop-blur-sm border border-white/20"
+          className="mt-6 p-4 rounded-xl bg-rgba(31, 41, 55, 0.3) backdrop-blur-[12px] border border-[#00BFFF]/30"
         >
           <div className="flex items-center gap-3">
             <motion.div
-              className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center"
+              className="w-8 h-8 bg-rgba(31, 41, 55, 0.5) backdrop-blur-[12px] rounded-lg flex items-center justify-center border border-[#00BFFF]/30"
               animate={{
                 rotate: [0, 360],
               }}
               transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
             >
-              <Zap size={16} className="text-white" />
+              <Zap size={16} className="text-[#00BFFF]" />
             </motion.div>
             <div>
-              <div className="text-sm font-medium text-white">Neural Network</div>
-              <div className="text-xs text-white/80 flex items-center gap-1">
+              <div className="text-sm font-medium text-[#FFFFFF]">Quantum Core</div>
+              <div className="text-xs text-[#00BFFF] flex items-center gap-1">
                 <motion.div
-                  className="w-2 h-2 bg-white rounded-full"
+                  className="w-2 h-2 bg-[#39FF14] rounded-full"
                   animate={{
                     scale: [1, 1.2, 1],
                     opacity: [1, 0.7, 1],
