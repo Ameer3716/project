@@ -20,6 +20,7 @@ import AgentManagement from './pages/AgentManagement';
 import AdvancedAnalytics from './pages/AdvancedAnalytics';
 import WhiteLabel from './pages/WhiteLabel';
 import SupportCenter from './pages/SupportCenter';
+import ProDashboard from './pages/ProDashboard';
 
 function App() {
   return (
