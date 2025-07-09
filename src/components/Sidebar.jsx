@@ -81,153 +81,164 @@ const Sidebar = ({ onNavigate }) => {
   }
 
   return (
-    <div className="w-full h-full relative overflow-hidden p-6">
-      {/* Logo Section */}
+    <div className="w-full h-full relative bg-[#111827] border-r border-[#00BFFF] border-opacity-30">
+      {/* Energy Line */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex items-center gap-3 mb-8 p-4 rounded-xl bg-rgba(255, 255, 255, 0.05) backdrop-blur-[12px] border border-rgba(255, 255, 255, 0.2)"
-      >
+        className="absolute right-0 top-0 bottom-0 w-px bg-[#00BFFF]"
+        animate={{
+          boxShadow: [
+            '0 0 5px rgba(0, 191, 255, 0.5)',
+            '0 0 15px rgba(0, 191, 255, 0.8)',
+            '0 0 5px rgba(0, 191, 255, 0.5)',
+          ],
+        }}
+        transition={{ duration: 2, repeat: Infinity }}
+      />
+
+      <div className="p-6 h-full">
+        {/* Logo Section */}
         <motion.div
-          className="w-10 h-10 bg-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-lg flex items-center justify-center"
-          whileHover={{ scale: 1.1, rotate: 5 }}
-          animate={{
-            boxShadow: [
-              '0 0 20px rgba(228, 34, 137, 0.5)',
-              '0 0 30px rgba(0, 255, 255, 0.5)',
-              '0 0 20px rgba(228, 34, 137, 0.5)',
-            ],
-          }}
-          transition={{ duration: 2, repeat: Infinity }}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-3 mb-8 p-4 rounded-xl bg-rgba(31, 41, 55, 0.3) backdrop-blur-[12px] border border-[#00BFFF]/30"
         >
-          <PhoneIncoming size={20} className="text-white" />
-        </motion.div>
-        <div>
-          <span className="text-xl font-bold bg-gradient-to-r from-[#E42289] to-[#00FFFF] bg-clip-text text-transparent">
-            CallEase
-          </span>
-          {user?.subscriptionPlan && (
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="px-2 py-1 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white text-xs font-bold rounded-full uppercase tracking-wider"
-            >
-              {user.subscriptionPlan}
-            </motion.div>
-          )}
-        </div>
-      </motion.div>
-
-      {/* Navigation */}
-      <nav className="flex-1 space-y-2">
-        {navLinks.map((link, index) => {
-          const active = isActive(link.path, link.isIndex);
-          return (
-            <motion.div
-              key={link.path}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <Link
-                to={link.path}
-                onClick={handleClick}
-                className={`group relative flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
-                  active
-                    ? 'bg-rgba(255, 255, 255, 0.05) backdrop-blur-[12px] text-[#F0F0F0] border border-rgba(255, 255, 255, 0.2)'
-                    : 'text-[#F0F0F0]/70 hover:text-[#F0F0F0] hover:bg-rgba(255, 255, 255, 0.05) backdrop-blur-[12px]'
-                }`}
-              >
-                {/* Active Indicator */}
-                {active && (
-                  <motion.div
-                    layoutId="activeIndicator"
-                    className="absolute inset-0 bg-gradient-to-r from-[#E42289]/10 to-[#00FFFF]/10 rounded-xl border border-[#E42289]/20"
-                    initial={false}
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-
-                {/* Icon */}
-                <motion.div
-                  className={`relative z-10 ${active ? 'text-[#00FFFF]' : 'text-[#F0F0F0]/70 group-hover:text-[#E42289]'}`}
-                  whileHover={{ scale: 1.1 }}
-                  animate={active ? {
-                    filter: [
-                      'drop-shadow(0 0 5px rgba(0, 255, 255, 0.5))',
-                      'drop-shadow(0 0 10px rgba(228, 34, 137, 0.5))',
-                      'drop-shadow(0 0 5px rgba(0, 255, 255, 0.5))',
-                    ],
-                  } : {}}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <link.icon size={20} />
-                </motion.div>
-
-                {/* Text */}
-                <span className={`relative z-10 font-medium ${
-                  active ? 'text-[#F0F0F0]' : 'group-hover:text-[#F0F0F0]'
-                }`}>
-                  {link.name}
-                </span>
-
-                {/* Hover Effect */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-[#E42289]/5 to-[#00FFFF]/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  whileHover={{
-                    boxShadow: '0 0 20px rgba(228, 34, 137, 0.1)',
-                  }}
-                />
-
-                {/* Active Glow */}
-                {active && (
-                  <motion.div
-                    className="absolute -inset-1 bg-gradient-to-r from-[#E42289]/20 to-[#00FFFF]/20 rounded-xl blur-sm -z-10"
-                    animate={{
-                      opacity: [0.5, 1, 0.5],
-                    }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                )}
-              </Link>
-            </motion.div>
-          );
-        })}
-      </nav>
-
-      {/* System Status */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="mt-6 p-4 rounded-xl bg-rgba(255, 255, 255, 0.05) backdrop-blur-[12px] border border-rgba(255, 255, 255, 0.2)"
-      >
-        <div className="flex items-center gap-3">
           <motion.div
-            className="w-8 h-8 bg-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-lg flex items-center justify-center"
+            className="w-10 h-10 bg-rgba(31, 41, 55, 0.5) backdrop-blur-[12px] rounded-lg flex items-center justify-center border border-[#00BFFF]/30"
+            whileHover={{ scale: 1.1, rotate: 5 }}
             animate={{
-              rotate: [0, 360],
+              boxShadow: [
+                '0 0 10px rgba(0, 191, 255, 0.3)',
+                '0 0 20px rgba(0, 191, 255, 0.5)',
+                '0 0 10px rgba(0, 191, 255, 0.3)',
+              ],
             }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 2, repeat: Infinity }}
           >
-            <Zap size={16} className="text-white" />
+            <PhoneIncoming size={20} className="text-[#00BFFF]" />
           </motion.div>
           <div>
-            <div className="text-sm font-medium text-[#F0F0F0]">Neural Network</div>
-            <div className="text-xs text-[#00FFFF] flex items-center gap-1">
+            <span className="text-xl font-bold text-[#FFFFFF]">
+              CallEase
+            </span>
+            {user?.subscriptionPlan && (
               <motion.div
-                className="w-2 h-2 bg-[#00FFFF] rounded-full"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [1, 0.7, 1],
-                }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              />
-              Systems Online
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="px-2 py-1 bg-rgba(31, 41, 55, 0.5) backdrop-blur-[12px] text-[#00BFFF] text-xs font-bold rounded-full uppercase tracking-wider border border-[#00BFFF]/30"
+              >
+                {user.subscriptionPlan}
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
+
+        {/* Navigation */}
+        <nav className="flex-1 space-y-2">
+          {navLinks.map((link, index) => {
+            const active = isActive(link.path, link.isIndex);
+            return (
+              <motion.div
+                key={link.path}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Link
+                  to={link.path}
+                  onClick={handleClick}
+                  className={`group relative flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
+                    active
+                      ? 'text-[#FFFFFF]'
+                      : 'text-[#D1D5DB] hover:text-[#FFFFFF]'
+                  }`}
+                >
+                  {/* Active Indicator - Sharp Green Bar */}
+                  {active && (
+                    <motion.div
+                      layoutId="activeIndicator"
+                      className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#39FF14] rounded-r-full"
+                      initial={false}
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      animate={{
+                        boxShadow: [
+                          '0 0 5px rgba(57, 255, 20, 0.5)',
+                          '0 0 15px rgba(57, 255, 20, 0.8)',
+                          '0 0 5px rgba(57, 255, 20, 0.5)',
+                        ],
+                      }}
+                    />
+                  )}
+
+                  {/* Icon */}
+                  <motion.div
+                    className={`relative z-10 ${active ? 'text-[#FFFFFF]' : 'text-[#D1D5DB] group-hover:text-[#00BFFF]'}`}
+                    whileHover={{ scale: 1.1 }}
+                    animate={active ? {
+                      filter: [
+                        'drop-shadow(0 0 5px rgba(255, 255, 255, 0.5))',
+                        'drop-shadow(0 0 10px rgba(255, 255, 255, 0.8))',
+                        'drop-shadow(0 0 5px rgba(255, 255, 255, 0.5))',
+                      ],
+                    } : {}}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <link.icon size={20} />
+                  </motion.div>
+
+                  {/* Text */}
+                  <span className={`relative z-10 font-medium ${
+                    active ? 'text-[#FFFFFF]' : 'group-hover:text-[#FFFFFF]'
+                  }`}>
+                    {link.name}
+                  </span>
+
+                  {/* Hover Effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-rgba(31, 41, 55, 0.2) rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    whileHover={{
+                      boxShadow: '0 0 15px rgba(0, 191, 255, 0.1)',
+                    }}
+                  />
+                </Link>
+              </motion.div>
+            );
+          })}
+        </nav>
+
+        {/* System Status */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="mt-6 p-4 rounded-xl bg-rgba(31, 41, 55, 0.3) backdrop-blur-[12px] border border-[#00BFFF]/30"
+        >
+          <div className="flex items-center gap-3">
+            <motion.div
+              className="w-8 h-8 bg-rgba(31, 41, 55, 0.5) backdrop-blur-[12px] rounded-lg flex items-center justify-center border border-[#00BFFF]/30"
+              animate={{
+                rotate: [0, 360],
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            >
+              <Zap size={16} className="text-[#00BFFF]" />
+            </motion.div>
+            <div>
+              <div className="text-sm font-medium text-[#FFFFFF]">Quantum Core</div>
+              <div className="text-xs text-[#00BFFF] flex items-center gap-1">
+                <motion.div
+                  className="w-2 h-2 bg-[#39FF14] rounded-full"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [1, 0.7, 1],
+                  }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                />
+                Systems Online
+              </div>
             </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 };
