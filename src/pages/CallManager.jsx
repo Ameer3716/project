@@ -70,6 +70,7 @@ const CallManager = () => {
   const handleInitiateCall = () => {
     if (!phoneNumber.trim()) return;
     
+    console.log('Initiating call to:', phoneNumber);
     setIsDialing(true);
     
     // Find first idle slot
@@ -106,6 +107,7 @@ const CallManager = () => {
           setCallTimer(0);
           setIsDialing(false);
           setPhoneNumber('');
+          console.log('Call connected to:', phoneNumber);
         }, 3000);
       }, 2000);
     }
@@ -113,6 +115,7 @@ const CallManager = () => {
 
   const handleAnswerCall = () => {
     if (incomingCall) {
+      console.log('Answering call from:', incomingCall.number);
       setActiveCall({
         ...incomingCall,
         type: 'inbound'
@@ -133,10 +136,12 @@ const CallManager = () => {
   };
 
   const handleDeclineCall = () => {
+    console.log('Declining call from:', incomingCall?.number);
     setIncomingCall(null);
   };
 
   const handleHangUp = () => {
+    console.log('Hanging up call with:', activeCall?.number);
     setActiveCall(null);
     setCallTimer(0);
     setIsMuted(false);
@@ -181,12 +186,15 @@ const CallManager = () => {
       >
         <div className="relative">
           <motion.h1 
-            className="text-4xl font-bold text-[#F0F0F0]"
+            className="text-4xl font-bold text-[#00FFFF]"
+            style={{
+              textShadow: '0 0 10px rgba(0, 255, 255, 0.8)',
+            }}
             animate={{
               textShadow: [
-                '0 0 20px rgba(228, 34, 137, 0.5)',
-                '0 0 30px rgba(0, 255, 255, 0.5)',
-                '0 0 20px rgba(228, 34, 137, 0.5)',
+                '0 0 10px rgba(0, 255, 255, 0.8)',
+                '0 0 20px rgba(0, 255, 255, 1)',
+                '0 0 10px rgba(0, 255, 255, 0.8)',
               ],
             }}
             transition={{ duration: 3, repeat: Infinity }}
@@ -194,7 +202,7 @@ const CallManager = () => {
             Call Manager
           </motion.h1>
           <motion.p 
-            className="text-[#F0F0F0]/70 mt-2"
+            className="text-[#F0F0F0] mt-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
@@ -217,7 +225,7 @@ const CallManager = () => {
           transition={{ delay: 0.4 }}
         >
           <motion.div
-            className="px-4 py-2 bg-rgba(255, 255, 255, 0.05) backdrop-blur-[12px] border border-[#00FFFF]/20 rounded-xl text-[#00FFFF] font-medium flex items-center gap-2"
+            className="px-4 py-2 bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-xl text-[#00FFFF] font-medium flex items-center gap-2"
             animate={{
               boxShadow: [
                 '0 0 20px rgba(0, 255, 255, 0.2)',
@@ -245,7 +253,10 @@ const CallManager = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-rgba(255, 255, 255, 0.05) backdrop-blur-[12px] border border-rgba(255, 255, 255, 0.2) rounded-2xl p-6 shadow-2xl"
+        className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-2xl p-6 shadow-2xl"
+        style={{
+          boxShadow: '0 0 40px rgba(0, 255, 255, 0.2)',
+        }}
       >
         {/* Incoming Call State */}
         {incomingCall && (
@@ -270,8 +281,8 @@ const CallManager = () => {
             
             <div className="space-y-2">
               <p className="text-2xl font-bold text-[#00FFFF]">{incomingCall.name}</p>
-              <p className="text-lg text-[#F0F0F0]/80">{incomingCall.number}</p>
-              <p className="text-sm text-[#F0F0F0]/60">{incomingCall.company}</p>
+              <p className="text-lg text-[#F0F0F0]">{incomingCall.number}</p>
+              <p className="text-sm text-gray-400">{incomingCall.company}</p>
             </div>
 
             <div className="flex justify-center gap-6">
@@ -316,9 +327,12 @@ const CallManager = () => {
             <div className="text-center space-y-2">
               <h2 className="text-2xl font-bold text-[#F0F0F0]">Active Call</h2>
               <p className="text-xl font-bold text-[#00FFFF]">{activeCall.name}</p>
-              <p className="text-lg text-[#F0F0F0]/80">{activeCall.number}</p>
+              <p className="text-lg text-[#F0F0F0]">{activeCall.number}</p>
               <motion.p 
                 className="text-2xl font-mono text-[#E42289]"
+                style={{
+                  textShadow: '0 0 10px rgba(228, 34, 137, 0.8)',
+                }}
                 animate={{ opacity: [0.7, 1, 0.7] }}
                 transition={{ duration: 1, repeat: Infinity }}
               >
@@ -328,11 +342,14 @@ const CallManager = () => {
 
             <div className="flex justify-center gap-4">
               <motion.button
-                onClick={() => setIsMuted(!isMuted)}
+                onClick={() => {
+                  setIsMuted(!isMuted);
+                  console.log(isMuted ? 'Unmuting call' : 'Muting call');
+                }}
                 className={`p-4 rounded-xl font-semibold flex items-center gap-2 ${
                   isMuted 
                     ? 'bg-gradient-to-r from-red-500 to-red-600 text-white' 
-                    : 'bg-rgba(255, 255, 255, 0.05) backdrop-blur-[12px] border border-rgba(255, 255, 255, 0.2) text-[#F0F0F0]'
+                    : 'bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 text-[#F0F0F0]'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -342,11 +359,14 @@ const CallManager = () => {
               </motion.button>
 
               <motion.button
-                onClick={() => setIsOnHold(!isOnHold)}
+                onClick={() => {
+                  setIsOnHold(!isOnHold);
+                  console.log(isOnHold ? 'Resuming call' : 'Putting call on hold');
+                }}
                 className={`p-4 rounded-xl font-semibold flex items-center gap-2 ${
                   isOnHold 
                     ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white' 
-                    : 'bg-rgba(255, 255, 255, 0.05) backdrop-blur-[12px] border border-rgba(255, 255, 255, 0.2) text-[#F0F0F0]'
+                    : 'bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 text-[#F0F0F0]'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -368,11 +388,14 @@ const CallManager = () => {
           </motion.div>
         )}
 
-        {/* Default Dialer State */}
+        {/* Outbound Dialer Console */}
         {!incomingCall && !activeCall && (
           <div>
             <motion.h3 
-              className="text-2xl font-bold text-[#F0F0F0] mb-6 flex items-center gap-3"
+              className="text-2xl font-bold text-[#E42289] mb-6 flex items-center gap-3"
+              style={{
+                textShadow: '0 0 10px rgba(228, 34, 137, 0.8)',
+              }}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
             >
@@ -394,7 +417,7 @@ const CallManager = () => {
             
             <div className="flex gap-4 items-end">
               <div className="flex-1">
-                <label className="block text-[#F0F0F0]/80 text-sm font-medium mb-2">
+                <label className="block text-[#F0F0F0] text-sm font-medium mb-2">
                   Phone Number
                 </label>
                 <motion.input
@@ -402,7 +425,7 @@ const CallManager = () => {
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   placeholder="+1 (555) 000-0000"
-                  className="w-full px-4 py-3 bg-rgba(255, 255, 255, 0.05) backdrop-blur-[12px] border border-rgba(255, 255, 255, 0.2) rounded-xl text-[#F0F0F0] placeholder-[#F0F0F0]/50 focus:outline-none focus:border-[#E42289] focus:ring-2 focus:ring-[#E42289]/20 transition-all duration-300"
+                  className="w-full px-4 py-3 bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-xl text-[#F0F0F0] placeholder-gray-400 focus:outline-none focus:border-[#E42289] focus:ring-2 focus:ring-[#E42289]/20 transition-all duration-300"
                   whileFocus={{
                     boxShadow: '0 0 20px rgba(228, 34, 137, 0.3)',
                     borderColor: '#E42289',
@@ -448,7 +471,7 @@ const CallManager = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="flex space-x-1 bg-rgba(255, 255, 255, 0.05) backdrop-blur-[12px] rounded-2xl p-1 border border-rgba(255, 255, 255, 0.2) shadow-lg"
+        className="flex space-x-1 bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] rounded-2xl p-1 border border-[#00FFFF]/30 shadow-lg"
       >
         {['live', 'logs'].map((tab) => (
           <motion.button
@@ -457,7 +480,7 @@ const CallManager = () => {
             className={`flex-1 py-3 px-6 rounded-xl font-medium transition-all duration-300 relative overflow-hidden ${
               activeTab === tab
                 ? 'text-white shadow-lg'
-                : 'text-[#F0F0F0]/60 hover:text-[#F0F0F0]'
+                : 'text-gray-400 hover:text-[#F0F0F0]'
             }`}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -487,9 +510,12 @@ const CallManager = () => {
           {/* Live Call Grid */}
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-[#E42289]/10 to-[#00FFFF]/10 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500" />
-            <div className="relative bg-rgba(255, 255, 255, 0.05) backdrop-blur-[12px] border border-rgba(255, 255, 255, 0.2) rounded-3xl p-8 shadow-2xl">
+            <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-3xl p-8 shadow-2xl">
               <motion.h3 
-                className="text-2xl font-bold text-[#F0F0F0] mb-8 flex items-center gap-3"
+                className="text-2xl font-bold text-[#E42289] mb-8 flex items-center gap-3"
+                style={{
+                  textShadow: '0 0 10px rgba(228, 34, 137, 0.8)',
+                }}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
               >
@@ -518,13 +544,22 @@ const CallManager = () => {
                     transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
                     className={`relative p-6 rounded-2xl border-2 transition-all duration-300 group cursor-pointer ${
                       slot.status === 'active' 
-                        ? 'border-[#00FFFF] bg-rgba(255, 255, 255, 0.05) shadow-lg shadow-[#00FFFF]/20' 
+                        ? 'border-[#00FFFF] bg-rgba(22, 21, 48, 0.6) shadow-lg' 
                         : slot.status === 'ringing'
-                        ? 'border-[#E42289] bg-rgba(255, 255, 255, 0.05) shadow-lg shadow-[#E42289]/20'
+                        ? 'border-[#E42289] bg-rgba(22, 21, 48, 0.6) shadow-lg'
                         : slot.status === 'dialing'
-                        ? 'border-purple-400 bg-rgba(255, 255, 255, 0.05) shadow-lg shadow-purple-400/20'
-                        : 'border-rgba(255, 255, 255, 0.2) bg-rgba(255, 255, 255, 0.05)'
+                        ? 'border-purple-400 bg-rgba(22, 21, 48, 0.6) shadow-lg'
+                        : 'border-[#00FFFF]/30 bg-rgba(22, 21, 48, 0.6)'
                     }`}
+                    style={{
+                      boxShadow: slot.status === 'active' 
+                        ? '0 0 20px rgba(0, 255, 255, 0.3)' 
+                        : slot.status === 'ringing'
+                        ? '0 0 20px rgba(228, 34, 137, 0.3)'
+                        : slot.status === 'dialing'
+                        ? '0 0 20px rgba(147, 51, 234, 0.3)'
+                        : 'none'
+                    }}
                     whileHover={{ scale: 1.05, y: -5 }}
                   >
                     {/* Status Animations */}
@@ -560,7 +595,7 @@ const CallManager = () => {
                     
                     <div className="relative z-10">
                       <div className="flex items-center justify-between mb-4">
-                        <span className="text-sm font-bold text-[#F0F0F0] bg-rgba(255, 255, 255, 0.05) backdrop-blur-sm px-3 py-1 rounded-full border border-rgba(255, 255, 255, 0.2)">
+                        <span className="text-sm font-bold text-[#F0F0F0] bg-rgba(22, 21, 48, 0.6) backdrop-blur-sm px-3 py-1 rounded-full border border-[#00FFFF]/30">
                           Slot {slot.id}
                         </span>
                         <motion.div 
@@ -590,7 +625,7 @@ const CallManager = () => {
                           className={`text-xs font-bold uppercase tracking-wider ${
                             slot.status === 'active' ? 'text-[#00FFFF]' : 
                             slot.status === 'ringing' ? 'text-[#E42289]' : 
-                            slot.status === 'dialing' ? 'text-purple-400' : 'text-[#F0F0F0]/50'
+                            slot.status === 'dialing' ? 'text-purple-400' : 'text-gray-400'
                           }`}
                           animate={slot.status === 'active' ? {
                             opacity: [0.7, 1, 0.7],
@@ -603,14 +638,14 @@ const CallManager = () => {
                         </motion.p>
                         
                         {slot.caller && (
-                          <p className="text-xs text-[#F0F0F0]/80 font-mono bg-rgba(255, 255, 255, 0.05) backdrop-blur-sm px-2 py-1 rounded-lg border border-rgba(255, 255, 255, 0.2)">
+                          <p className="text-xs text-[#F0F0F0] font-mono bg-rgba(22, 21, 48, 0.6) backdrop-blur-sm px-2 py-1 rounded-lg border border-[#00FFFF]/30">
                             {slot.caller}
                           </p>
                         )}
                         
                         {slot.duration && (
                           <motion.p 
-                            className="text-xs text-[#F0F0F0]/80 font-semibold"
+                            className="text-xs text-[#F0F0F0] font-semibold"
                             key={slot.duration}
                           >
                             Duration: {slot.duration}
@@ -618,7 +653,7 @@ const CallManager = () => {
                         )}
                         
                         {slot.agent && (
-                          <p className="text-xs text-[#F0F0F0]/80 bg-gradient-to-r from-[#E42289]/20 to-[#00FFFF]/20 px-2 py-1 rounded-lg border border-rgba(255, 255, 255, 0.2)">
+                          <p className="text-xs text-[#F0F0F0] bg-gradient-to-r from-[#E42289]/20 to-[#00FFFF]/20 px-2 py-1 rounded-lg border border-[#00FFFF]/30">
                             {slot.agent}
                           </p>
                         )}
@@ -642,24 +677,24 @@ const CallManager = () => {
           {/* Search and Filter */}
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-[#E42289]/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-            <div className="relative bg-rgba(255, 255, 255, 0.05) backdrop-blur-[12px] border border-rgba(255, 255, 255, 0.2) rounded-2xl p-6 shadow-xl">
+            <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-2xl p-6 shadow-xl">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#F0F0F0]/40 w-5 h-5" />
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <input
                     type="text"
                     placeholder="Search by phone number..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 border border-rgba(255, 255, 255, 0.2) rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E42289] bg-rgba(255, 255, 255, 0.05) backdrop-blur-sm transition-all duration-300 text-[#F0F0F0] placeholder-[#F0F0F0]/50"
+                    className="w-full pl-12 pr-4 py-3 border border-[#00FFFF]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E42289] bg-rgba(22, 21, 48, 0.6) backdrop-blur-sm transition-all duration-300 text-[#F0F0F0] placeholder-gray-400"
                   />
                 </div>
                 <div className="relative">
-                  <Filter className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#F0F0F0]/40 w-5 h-5" />
+                  <Filter className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value)}
-                    className="pl-12 pr-8 py-3 border border-rgba(255, 255, 255, 0.2) rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E42289] bg-rgba(255, 255, 255, 0.05) backdrop-blur-sm text-[#F0F0F0]"
+                    className="pl-12 pr-8 py-3 border border-[#00FFFF]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E42289] bg-rgba(22, 21, 48, 0.6) backdrop-blur-sm text-[#F0F0F0]"
                   >
                     <option value="all">All Status</option>
                     <option value="completed">Completed</option>
@@ -673,7 +708,7 @@ const CallManager = () => {
           {/* Call Logs Table */}
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-[#00FFFF]/10 to-purple-500/10 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500" />
-            <div className="relative bg-rgba(255, 255, 255, 0.05) backdrop-blur-[12px] border border-rgba(255, 255, 255, 0.2) rounded-3xl shadow-2xl overflow-hidden">
+            <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-3xl shadow-2xl overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white">
@@ -687,14 +722,14 @@ const CallManager = () => {
                       <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-rgba(255, 255, 255, 0.1)">
+                  <tbody className="divide-y divide-[#00FFFF]/10">
                     {callLogs.map((call, index) => (
                       <motion.tr
                         key={call.id}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.5 + index * 0.1 }}
-                        className="hover:bg-rgba(255, 255, 255, 0.05) transition-all duration-300 group"
+                        className="hover:bg-rgba(22, 21, 48, 0.8) transition-all duration-300 group"
                         whileHover={{ scale: 1.01 }}
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -716,7 +751,7 @@ const CallManager = () => {
                             <span className="text-sm text-[#F0F0F0] capitalize font-medium">{call.direction}</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[#F0F0F0] bg-rgba(255, 255, 255, 0.05) rounded-lg">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[#F0F0F0] bg-rgba(22, 21, 48, 0.6) rounded-lg">
                           {call.number}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-[#F0F0F0] font-semibold">

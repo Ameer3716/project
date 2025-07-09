@@ -99,30 +99,6 @@ const DashboardOverview = () => {
 
   return (
     <div className="space-y-8 relative">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -50, 0],
-              opacity: [0.3, 1, 0.3],
-              scale: [1, 2, 1],
-            }}
-            transition={{
-              duration: 4 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 3,
-            }}
-          />
-        ))}
-      </div>
-
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -30 }}
@@ -132,12 +108,15 @@ const DashboardOverview = () => {
       >
         <div className="relative">
           <motion.h1 
-            className="text-4xl font-bold text-[#F0F0F0]"
+            className="text-4xl font-bold text-[#00FFFF]"
+            style={{
+              textShadow: '0 0 10px rgba(0, 255, 255, 0.8)',
+            }}
             animate={{
               textShadow: [
-                '0 0 20px rgba(228, 34, 137, 0.5)',
-                '0 0 30px rgba(0, 255, 255, 0.5)',
-                '0 0 20px rgba(228, 34, 137, 0.5)',
+                '0 0 10px rgba(0, 255, 255, 0.8)',
+                '0 0 20px rgba(0, 255, 255, 1)',
+                '0 0 10px rgba(0, 255, 255, 0.8)',
               ],
             }}
             transition={{ duration: 3, repeat: Infinity }}
@@ -145,7 +124,7 @@ const DashboardOverview = () => {
             Dashboard Overview
           </motion.h1>
           <motion.p 
-            className="text-[#F0F0F0]/70 mt-2"
+            className="text-[#F0F0F0] mt-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
@@ -173,7 +152,10 @@ const DashboardOverview = () => {
             transition={{ delay: 0.4 }}
             value={selectedClient}
             onChange={(e) => setSelectedClient(e.target.value)}
-            className="px-6 py-3 bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#E42289]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E42289] text-[#F0F0F0] font-medium shadow-lg"
+            className="px-6 py-3 bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00FFFF] text-[#F0F0F0] font-medium shadow-lg"
+            style={{
+              boxShadow: '0 0 20px rgba(0, 255, 255, 0.2)',
+            }}
           >
             {clients.map(client => (
               <option key={client.id} value={client.id} className="bg-[#0F0E2B] text-[#F0F0F0]">
@@ -194,10 +176,17 @@ const DashboardOverview = () => {
           className="relative group"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-[#E42289]/20 to-[#00FFFF]/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-          <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
+          <motion.div 
+            className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-2xl p-6 shadow-xl transition-all duration-300"
+            whileHover={{ 
+              y: -5,
+              boxShadow: '0 0 30px rgba(0, 255, 255, 0.5)',
+              borderColor: 'rgba(0, 255, 255, 0.8)'
+            }}
+          >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[#F0F0F0]/70 text-sm font-medium">Total Calls</p>
+                <p className="text-gray-400 text-sm font-medium">Total Calls</p>
                 <motion.p 
                   className="text-3xl font-bold text-[#F0F0F0] mt-1"
                   key={animatedNumbers.totalCalls}
@@ -220,7 +209,7 @@ const DashboardOverview = () => {
                 <Phone className="w-7 h-7 text-white" />
               </motion.div>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Appointments Set */}
@@ -231,10 +220,17 @@ const DashboardOverview = () => {
           className="relative group"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-[#00FFFF]/20 to-purple-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-          <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
+          <motion.div 
+            className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-2xl p-6 shadow-xl transition-all duration-300"
+            whileHover={{ 
+              y: -5,
+              boxShadow: '0 0 30px rgba(0, 255, 255, 0.5)',
+              borderColor: 'rgba(0, 255, 255, 0.8)'
+            }}
+          >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[#F0F0F0]/70 text-sm font-medium">Appointments Set</p>
+                <p className="text-gray-400 text-sm font-medium">Appointments Set</p>
                 <motion.p 
                   className="text-3xl font-bold text-[#F0F0F0] mt-1"
                   key={animatedNumbers.appointments}
@@ -257,7 +253,7 @@ const DashboardOverview = () => {
                 <Calendar className="w-7 h-7 text-white" />
               </motion.div>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Avg Call Duration */}
@@ -268,10 +264,17 @@ const DashboardOverview = () => {
           className="relative group"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-[#E42289]/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-          <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
+          <motion.div 
+            className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-2xl p-6 shadow-xl transition-all duration-300"
+            whileHover={{ 
+              y: -5,
+              boxShadow: '0 0 30px rgba(0, 255, 255, 0.5)',
+              borderColor: 'rgba(0, 255, 255, 0.8)'
+            }}
+          >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[#F0F0F0]/70 text-sm font-medium">Avg Call Duration</p>
+                <p className="text-gray-400 text-sm font-medium">Avg Call Duration</p>
                 <motion.p 
                   className="text-3xl font-bold text-[#F0F0F0] mt-1"
                   key={animatedNumbers.avgDuration}
@@ -288,7 +291,7 @@ const DashboardOverview = () => {
                 <Clock className="w-7 h-7 text-white" />
               </motion.div>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Active Connections */}
@@ -299,10 +302,17 @@ const DashboardOverview = () => {
           className="relative group overflow-hidden"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-[#00FFFF]/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-          <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
+          <motion.div 
+            className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-2xl p-6 shadow-xl transition-all duration-300"
+            whileHover={{ 
+              y: -5,
+              boxShadow: '0 0 30px rgba(0, 255, 255, 0.5)',
+              borderColor: 'rgba(0, 255, 255, 0.8)'
+            }}
+          >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[#F0F0F0]/70 text-sm font-medium">Active Connections</p>
+                <p className="text-gray-400 text-sm font-medium">Active Connections</p>
                 <motion.p 
                   className="text-3xl font-bold text-[#F0F0F0] mt-1"
                   key={animatedNumbers.activeConnections}
@@ -332,7 +342,7 @@ const DashboardOverview = () => {
                 />
               </motion.div>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Growth and Agency additional KPIs */}
@@ -345,10 +355,17 @@ const DashboardOverview = () => {
               className="relative group"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-              <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
+              <motion.div 
+                className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-2xl p-6 shadow-xl transition-all duration-300"
+                whileHover={{ 
+                  y: -5,
+                  boxShadow: '0 0 30px rgba(0, 255, 255, 0.5)',
+                  borderColor: 'rgba(0, 255, 255, 0.8)'
+                }}
+              >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[#F0F0F0]/70 text-sm font-medium">Team Productivity</p>
+                    <p className="text-gray-400 text-sm font-medium">Team Productivity</p>
                     <motion.p 
                       className="text-3xl font-bold text-[#F0F0F0] mt-1"
                       key={animatedNumbers.teamScore}
@@ -367,7 +384,7 @@ const DashboardOverview = () => {
                     <Users className="w-7 h-7 text-white" />
                   </motion.div>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
 
             <motion.div
@@ -377,10 +394,17 @@ const DashboardOverview = () => {
               className="relative group"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-              <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
+              <motion.div 
+                className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-2xl p-6 shadow-xl transition-all duration-300"
+                whileHover={{ 
+                  y: -5,
+                  boxShadow: '0 0 30px rgba(0, 255, 255, 0.5)',
+                  borderColor: 'rgba(0, 255, 255, 0.8)'
+                }}
+              >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[#F0F0F0]/70 text-sm font-medium">AI Customization</p>
+                    <p className="text-gray-400 text-sm font-medium">AI Customization</p>
                     <motion.p 
                       className="text-3xl font-bold text-[#F0F0F0] mt-1"
                       key={animatedNumbers.aiLevel}
@@ -402,7 +426,7 @@ const DashboardOverview = () => {
                     <Brain className="w-7 h-7 text-white" />
                   </motion.div>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           </>
         )}
@@ -416,9 +440,18 @@ const DashboardOverview = () => {
         className="relative group"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-[#E42289]/10 to-[#00FFFF]/10 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500" />
-        <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-3xl p-8 shadow-2xl">
+        <motion.div 
+          className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/30 rounded-3xl p-8 shadow-2xl"
+          whileHover={{
+            boxShadow: '0 0 40px rgba(0, 255, 255, 0.3)',
+            borderColor: 'rgba(0, 255, 255, 0.6)'
+          }}
+        >
           <motion.h3 
-            className="text-2xl font-bold text-[#F0F0F0] mb-8 flex items-center gap-3"
+            className="text-2xl font-bold text-[#E42289] mb-8 flex items-center gap-3"
+            style={{
+              textShadow: '0 0 10px rgba(228, 34, 137, 0.8)',
+            }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.8 }}
@@ -443,7 +476,10 @@ const DashboardOverview = () => {
                 transition={{ delay: 0.9 + index * 0.1, duration: 0.6 }}
               >
                 <motion.div
-                  className="w-full bg-gradient-to-t from-[#E42289] via-purple-500 to-[#00FFFF] rounded-t-xl relative overflow-hidden"
+                  className="w-full rounded-t-xl relative overflow-hidden"
+                  style={{
+                    background: 'linear-gradient(to top, #E42289, #9333EA, #00FFFF)',
+                  }}
                   initial={{ height: 0 }}
                   animate={{ height: `${(item.calls / maxCalls) * 250}px` }}
                   transition={{ delay: 0.9 + index * 0.1, duration: 0.8, ease: "easeOut" }}
@@ -463,7 +499,7 @@ const DashboardOverview = () => {
                   />
                   
                   <motion.div
-                    className="absolute -top-10 left-1/2 transform -translate-x-1/2 text-sm font-bold text-[#F0F0F0] bg-rgba(22, 21, 48, 0.8) backdrop-blur-sm px-3 py-1 rounded-full border border-[#E42289]/20"
+                    className="absolute -top-10 left-1/2 transform -translate-x-1/2 text-sm font-bold text-[#F0F0F0] bg-rgba(22, 21, 48, 0.8) backdrop-blur-sm px-3 py-1 rounded-full border border-[#00FFFF]/30"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.6 + index * 0.1 }}
@@ -472,7 +508,7 @@ const DashboardOverview = () => {
                   </motion.div>
                 </motion.div>
                 <motion.p 
-                  className="text-sm text-[#F0F0F0]/70 mt-4 font-medium"
+                  className="text-sm text-gray-400 mt-4 font-medium"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1.2 + index * 0.1 }}
@@ -482,7 +518,7 @@ const DashboardOverview = () => {
               </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </motion.div>
     </div>
   );
