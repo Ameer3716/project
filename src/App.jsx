@@ -5,18 +5,18 @@ import { AuthProvider } from './contexts/AuthContext';
 
 // Hooks and General Components
 import useSmoothScroll from '../hooks/useSmoothScroll';
-import Navbar from './Components/Navbar';
-import Footer from './Components/Footer';
-import ProtectedRoute from './Components/ProtectedRoute';
-import DashboardLayout from './Components/DashboardLayout';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import ProtectedRoute from './components/ProtectedRoute';
+import DashboardLayout from './components/DashboardLayout';
 
 // --- Public Facing Pages ---
-import Home from './Components/Home';
-import Pricing from './Components/Pricing';
-import SuccessPage from './Components/SuccessPage';
-import ContactPage from './Components/ContactPage';
-import AboutPage from './Components/AboutPage';
-import BlogPage from './Components/BlogPage';
+import Home from './components/Home';
+import Pricing from './components/Pricing';
+import SuccessPage from './components/SuccessPage';
+import ContactPage from './components/ContactPage';
+import AboutPage from './components/AboutPage';
+import BlogPage from './components/BlogPage';
 
 // --- Dashboard Pages (New Structure) ---
 import DashboardOverview from './pages/DashboardOverview';

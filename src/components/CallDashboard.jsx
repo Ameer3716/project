@@ -11,10 +11,6 @@ import {
 import styled, { keyframes, css } from "styled-components";
 import io from "socket.io-client";
 
-// Shared layout components
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-
 const { Title, Text } = Typography;
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 // Connect to Socket.IO via proxy
@@ -729,7 +725,6 @@ const CallDashboard = () => {
             </TwoCardLayout>
           )}
         </ContentWrapper>
-        <Footer />
       </PageWrapper>
     </>
   );
