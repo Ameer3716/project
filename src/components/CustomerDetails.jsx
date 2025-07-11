@@ -1,8 +1,7 @@
 // src/Components/CustomerDetails.jsx
 import React, { useEffect, useState } from "react";
 import { Card, Typography, Spin, notification } from "antd";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+
 import styled, { keyframes } from "styled-components";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 const { Title, Text } = Typography;
@@ -111,7 +110,7 @@ const CustomerDetails = () => {
           <Label>Subscription Expires:</Label> <Value>{subscription.expiry_date ? new Date(subscription.expiry_date).toLocaleString() : "N/A"}</Value>
         </StyledCard>
       </ContentWrapper>
-      <Footer />
+ 
     </>
   );
 };

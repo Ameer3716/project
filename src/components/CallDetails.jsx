@@ -1,8 +1,7 @@
 // src/Components/CallDetails.jsx
 import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 // Animations
 const fadeIn = keyframes`
@@ -148,7 +147,6 @@ const CallDetails = () => {
           </CardBody>
         </CallCard>
       ))}
-      <Footer />
     </PageContainer>
   );
 };
