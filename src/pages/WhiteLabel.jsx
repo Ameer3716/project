@@ -1,189 +1,391 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Palette, Upload, Eye, Save, Monitor, Smartphone, Tablet } from 'lucide-react';
+import { 
+  Palette, 
+  Upload, 
+  Globe, 
+  Eye, 
+  Save, 
+  Download,
+  Smartphone,
+  Monitor,
+  Tablet,
+  RefreshCw,
+  Settings,
+  Crown,
+  Link as LinkIcon
+} from 'lucide-react';
 
-const WhiteLabel = () => {
-  const [settings, setSettings] = useState({
+const WhiteLabelPage = () => {
+  const [brandingConfig, setBrandingConfig] = useState({
     logo: null,
-    primaryColor: '#E42289',
-    secondaryColor: '#00FFFF',
-    customDomain: 'client.callease.com',
-    companyName: 'Your Company',
-    brandingEnabled: true
+    customDomain: 'portal.agency.com',
+    primaryColor: '#00FFFF',
+    secondaryColor: '#E42289',
+    companyName: 'Your Agency',
+    showPoweredBy: true,
+    favicon: null
   });
-
   const [previewDevice, setPreviewDevice] = useState('desktop');
+  const [isPreviewLoading, setIsPreviewLoading] = useState(false);
 
   const handleColorChange = (colorType, color) => {
-    setSettings(prev => ({
+    setBrandingConfig(prev => ({
       ...prev,
       [colorType]: color
     }));
   };
 
-  const handleLogoUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setSettings(prev => ({
-          ...prev,
-          logo: e.target.result
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleFileUpload = (fileType, file) => {
+    setBrandingConfig(prev => ({
+      ...prev,
+      [fileType]: file
+    }));
+  };
+
+  const refreshPreview = () => {
+    setIsPreviewLoading(true);
+    setTimeout(() => setIsPreviewLoading(false), 1000);
+  };
+
+  const ColorPicker = ({ label, value, onChange, description }) => (
+    <div className="space-y-3">
+      <div>
+        <label className="block text-[#F0F0F0] font-medium mb-1">
+          {label}
+        </label>
+        {description && (
+          <p className="text-white/60 text-sm">{description}</p>
+        )}
+      </div>
+      <div className="flex items-center gap-3">
+        <div className="relative">
+          <input
+            type="color"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="w-12 h-12 rounded-lg border-2 border-white/20 cursor-pointer"
+            style={{ backgroundColor: value }}
+          />
+          <div 
+            className="absolute inset-0 rounded-lg border-2 border-white/20 pointer-events-none"
+            style={{ 
+              boxShadow: `0 0 20px ${value}40`
+            }}
+          />
+        </div>
+        <div className="flex-1">
+          <input
+            type="text"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-[#F0F0F0] font-mono focus:border-[#00FFFF] focus:outline-none focus:ring-2 focus:ring-[#00FFFF]/20 transition-all duration-300"
+            placeholder="#00FFFF"
+          />
+        </div>
+      </div>
+    </div>
+  );
+
+  const FileUploader = ({ label, accept, onChange, currentFile, description }) => (
+    <div className="space-y-3">
+      <div>
+        <label className="block text-[#F0F0F0] font-medium mb-1">
+          {label}
+        </label>
+        {description && (
+          <p className="text-white/60 text-sm">{description}</p>
+        )}
+      </div>
+      <div className="border-2 border-dashed border-white/20 rounded-lg p-6 text-center hover:border-[#00FFFF]/40 transition-colors cursor-pointer">
+        <input
+          type="file"
+          accept={accept}
+          onChange={(e) => onChange(e.target.files[0])}
+          className="hidden"
+          id={`upload-${label.toLowerCase().replace(' ', '-')}`}
+        />
+        <label 
+          htmlFor={`upload-${label.toLowerCase().replace(' ', '-')}`}
+          className="cursor-pointer"
+        >
+          <Upload className="mx-auto text-white/40 mb-3" size={32} />
+          <p className="text-[#F0F0F0] font-medium mb-1">
+            {currentFile ? currentFile.name : `Upload ${label}`}
+          </p>
+          <p className="text-white/60 text-sm">
+            {accept.split(',').join(', ')} files supported
+          </p>
+        </label>
+      </div>
+    </div>
+  );
+
+  const PreviewFrame = () => {
+    const deviceStyles = {
+      desktop: { width: '100%', height: '100%' },
+      tablet: { width: '768px', height: '1024px', maxWidth: '100%', maxHeight: '100%' },
+      mobile: { width: '375px', height: '667px', maxWidth: '100%', maxHeight: '100%' }
+    };
+
+    return (
+      <div className="bg-black/40 rounded-lg p-4 h-full flex items-center justify-center">
+        <motion.div
+          className="bg-white/5 rounded-lg border border-white/10 overflow-hidden relative"
+          style={deviceStyles[previewDevice]}
+          animate={{ scale: isPreviewLoading ? 0.95 : 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          {isPreviewLoading && (
+            <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-10">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              >
+                <RefreshCw className="text-[#00FFFF]" size={32} />
+              </motion.div>
+            </div>
+          )}
+          
+          {/* Mock Dashboard Preview */}
+          <div className="h-full flex flex-col">
+            {/* Header */}
+            <div 
+              className="p-4 border-b border-white/10"
+              style={{ backgroundColor: `${brandingConfig.primaryColor}20` }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                  {brandingConfig.logo ? '📷' : '🏢'}
+                </div>
+                <span className="text-[#F0F0F0] font-bold">
+                  {brandingConfig.companyName}
+                </span>
+              </div>
+            </div>
+            
+            {/* Sidebar */}
+            <div className="flex flex-1">
+              <div className="w-64 bg-black/20 border-r border-white/10 p-4">
+                <div className="space-y-2">
+                  {['Dashboard', 'Analytics', 'Settings'].map((item, index) => (
+                    <div 
+                      key={item}
+                      className={`p-3 rounded-lg transition-colors ${
+                        index === 0 
+                          ? 'border' 
+                          : 'hover:bg-white/5'
+                      }`}
+                      style={index === 0 ? { 
+                        borderColor: brandingConfig.primaryColor,
+                        backgroundColor: `${brandingConfig.primaryColor}20`
+                      } : {}}
+                    >
+                      <span className="text-[#F0F0F0] text-sm">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Main Content */}
+              <div className="flex-1 p-6">
+                <h2 className="text-xl font-bold text-[#F0F0F0] mb-4">
+                  Welcome to {brandingConfig.companyName}
+                </h2>
+                
+                {/* Sample Cards */}
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  {[
+                    { label: 'Total Calls', value: '1,247', color: brandingConfig.primaryColor },
+                    { label: 'Success Rate', value: '92%', color: brandingConfig.secondaryColor },
+                    { label: 'Active Users', value: '24', color: '#9333EA' }
+                  ].map((stat, index) => (
+                    <div key={index} className="bg-white/5 rounded-lg p-4 border border-white/10">
+                      <div 
+                        className="text-2xl font-bold mb-1"
+                        style={{ color: stat.color }}
+                      >
+                        {stat.value}
+                      </div>
+                      <div className="text-white/60 text-sm">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Sample Chart */}
+                <div className="bg-white/5 rounded-lg p-4 border border-white/10 h-32">
+                  <div className="text-[#F0F0F0] font-medium mb-3">Performance Overview</div>
+                  <div className="flex items-end gap-2 h-16">
+                    {[40, 65, 45, 80, 55, 70, 60].map((height, index) => (
+                      <div
+                        key={index}
+                        className="flex-1 rounded-t"
+                        style={{
+                          height: `${height}%`,
+                          background: `linear-gradient(to top, ${brandingConfig.primaryColor}, ${brandingConfig.secondaryColor})`
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Footer */}
+            {brandingConfig.showPoweredBy && (
+              <div className="p-3 border-t border-white/10 text-center">
+                <span className="text-white/40 text-xs">
+                  Powered by CallEase
+                </span>
+              </div>
+            )}
+          </div>
+        </motion.div>
+      </div>
+    );
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <div className="p-8 space-y-8">
+      {/* Page Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex justify-between items-center"
+        className="text-center"
       >
-        <div>
-          <h1 className="text-3xl font-bold text-[#00FFFF] mb-2">White-Label Branding</h1>
-          <p className="text-[#E42289]">Customize the platform with your client's branding</p>
-        </div>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="px-6 py-3 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white rounded-lg font-semibold flex items-center gap-2 shadow-lg"
-        >
-          <Save className="w-4 h-4" />
-          Save Changes
-        </motion.button>
+        <h1 className="text-4xl font-bold text-[#E42289] mb-2">
+          White-Label Studio
+        </h1>
+        <p className="text-[#00FFFF]/80">
+          Branded Solutions & Custom Portal Designer
+        </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Settings Panel */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Branding Controls */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="space-y-6"
+          transition={{ delay: 0.2 }}
+          className="lg:col-span-1 space-y-6"
         >
-          {/* Logo Upload */}
-          <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg">
-            <h3 className="text-lg font-bold text-[#0C0A1D] mb-4 flex items-center gap-2">
-              <Upload className="w-5 h-5" />
-              Logo Upload
-            </h3>
-            
-            <div className="space-y-4">
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-[#E42289] transition-colors duration-200">
-                {settings.logo ? (
-                  <div className="space-y-4">
-                    <img
-                      src={settings.logo}
-                      alt="Uploaded logo"
-                      className="max-h-20 mx-auto"
-                    />
-                    <p className="text-sm text-gray-600">Logo uploaded successfully</p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    <Upload className="w-12 h-12 text-gray-400 mx-auto" />
-                    <p className="text-gray-600">Click to upload your logo</p>
-                    <p className="text-xs text-gray-500">PNG, JPG up to 2MB</p>
-                  </div>
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleLogoUpload}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                />
+          <div className="bg-white/10 backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-xl p-6 hover:border-[#00FFFF]/40 transition-all duration-300">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-lg flex items-center justify-center">
+                <Palette className="text-white" size={20} />
               </div>
+              <h3 className="text-xl font-bold text-[#F0F0F0]">
+                Branding Configuration
+              </h3>
             </div>
-          </div>
 
-          {/* Color Customization */}
-          <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg">
-            <h3 className="text-lg font-bold text-[#0C0A1D] mb-4 flex items-center gap-2">
-              <Palette className="w-5 h-5" />
-              Color Scheme
-            </h3>
-            
-            <div className="space-y-4">
+            <div className="space-y-6">
+              {/* Company Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Primary Color</label>
-                <div className="flex items-center gap-3">
-                  <input
-                    type="color"
-                    value={settings.primaryColor}
-                    onChange={(e) => handleColorChange('primaryColor', e.target.value)}
-                    className="w-12 h-12 rounded-lg border border-gray-300 cursor-pointer"
-                  />
-                  <input
-                    type="text"
-                    value={settings.primaryColor}
-                    onChange={(e) => handleColorChange('primaryColor', e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289]"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
-                <div className="flex items-center gap-3">
-                  <input
-                    type="color"
-                    value={settings.secondaryColor}
-                    onChange={(e) => handleColorChange('secondaryColor', e.target.value)}
-                    className="w-12 h-12 rounded-lg border border-gray-300 cursor-pointer"
-                  />
-                  <input
-                    type="text"
-                    value={settings.secondaryColor}
-                    onChange={(e) => handleColorChange('secondaryColor', e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289]"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Domain Settings */}
-          <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg">
-            <h3 className="text-lg font-bold text-[#0C0A1D] mb-4">Custom Domain</h3>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Domain Name</label>
-                <input
-                  type="text"
-                  value={settings.customDomain}
-                  onChange={(e) => setSettings(prev => ({ ...prev, customDomain: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289]"
-                  placeholder="client.callease.com"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
-                <input
-                  type="text"
-                  value={settings.companyName}
-                  onChange={(e) => setSettings(prev => ({ ...prev, companyName: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289]"
-                  placeholder="Your Company Name"
-                />
-              </div>
-
-              <div className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  id="branding"
-                  checked={settings.brandingEnabled}
-                  onChange={(e) => setSettings(prev => ({ ...prev, brandingEnabled: e.target.checked }))}
-                  className="w-4 h-4 text-[#E42289] border-gray-300 rounded focus:ring-[#E42289]"
-                />
-                <label htmlFor="branding" className="text-sm text-gray-700">
-                  Enable white-label branding
+                <label className="block text-[#F0F0F0] font-medium mb-2">
+                  Company Name
                 </label>
+                <input
+                  type="text"
+                  value={brandingConfig.companyName}
+                  onChange={(e) => setBrandingConfig(prev => ({ ...prev, companyName: e.target.value }))}
+                  className="w-full px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-[#F0F0F0] focus:border-[#00FFFF] focus:outline-none focus:ring-2 focus:ring-[#00FFFF]/20 transition-all duration-300"
+                  placeholder="Your Agency Name"
+                />
               </div>
+
+              {/* Logo Upload */}
+              <FileUploader
+                label="Company Logo"
+                accept=".png,.jpg,.jpeg,.svg"
+                onChange={(file) => handleFileUpload('logo', file)}
+                currentFile={brandingConfig.logo}
+                description="Recommended: 200x60px, PNG or SVG"
+              />
+
+              {/* Favicon Upload */}
+              <FileUploader
+                label="Favicon"
+                accept=".ico,.png"
+                onChange={(file) => handleFileUpload('favicon', file)}
+                currentFile={brandingConfig.favicon}
+                description="32x32px ICO or PNG file"
+              />
+
+              {/* Custom Domain */}
+              <div>
+                <label className="block text-[#F0F0F0] font-medium mb-2">
+                  Custom Domain
+                </label>
+                <div className="flex items-center gap-2">
+                  <Globe className="text-[#00FFFF]" size={20} />
+                  <input
+                    type="text"
+                    value={brandingConfig.customDomain}
+                    onChange={(e) => setBrandingConfig(prev => ({ ...prev, customDomain: e.target.value }))}
+                    className="flex-1 px-4 py-3 bg-black/20 border border-white/20 rounded-lg text-[#F0F0F0] focus:border-[#00FFFF] focus:outline-none focus:ring-2 focus:ring-[#00FFFF]/20 transition-all duration-300"
+                    placeholder="portal.youragency.com"
+                  />
+                </div>
+                <p className="text-white/60 text-sm mt-1">
+                  Configure DNS to point to our servers
+                </p>
+              </div>
+
+              {/* Color Customization */}
+              <ColorPicker
+                label="Primary Accent Color"
+                value={brandingConfig.primaryColor}
+                onChange={(color) => handleColorChange('primaryColor', color)}
+                description="Main brand color for buttons and highlights"
+              />
+
+              <ColorPicker
+                label="Secondary Accent Color"
+                value={brandingConfig.secondaryColor}
+                onChange={(color) => handleColorChange('secondaryColor', color)}
+                description="Secondary color for gradients and accents"
+              />
+
+              {/* Powered By Toggle */}
+              <div className="flex items-center justify-between p-4 bg-black/20 rounded-lg">
+                <div>
+                  <div className="text-[#F0F0F0] font-medium">Show "Powered by CallEase"</div>
+                  <div className="text-white/60 text-sm">Display attribution in footer</div>
+                </div>
+                <motion.button
+                  onClick={() => setBrandingConfig(prev => ({ ...prev, showPoweredBy: !prev.showPoweredBy }))}
+                  className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${
+                    brandingConfig.showPoweredBy ? 'bg-gradient-to-r from-[#E42289] to-[#00FFFF]' : 'bg-white/20'
+                  }`}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <motion.div
+                    className="absolute top-1 w-4 h-4 bg-white rounded-full shadow-lg"
+                    animate={{ x: brandingConfig.showPoweredBy ? 26 : 2 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  />
+                </motion.button>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3 mt-8">
+              <motion.button
+                className="flex-1 py-3 bg-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-lg text-white font-medium flex items-center justify-center gap-2"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Save size={16} />
+                Save Configuration
+              </motion.button>
+              <motion.button
+                className="px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white/80 hover:bg-white/20 transition-colors"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Download size={16} />
+              </motion.button>
             </div>
           </div>
         </motion.div>
@@ -192,135 +394,123 @@ const WhiteLabel = () => {
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg"
+          transition={{ delay: 0.4 }}
+          className="lg:col-span-2 space-y-6"
         >
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-bold text-[#0C0A1D] flex items-center gap-2">
-              <Eye className="w-5 h-5" />
-              Live Preview
-            </h3>
-            
-            <div className="flex gap-2">
-              {[
-                { id: 'desktop', icon: Monitor },
-                { id: 'tablet', icon: Tablet },
-                { id: 'mobile', icon: Smartphone }
-              ].map(device => (
-                <button
-                  key={device.id}
-                  onClick={() => setPreviewDevice(device.id)}
-                  className={`p-2 rounded-lg transition-all duration-200 ${
-                    previewDevice === device.id
-                      ? 'bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  <device.icon className="w-4 h-4" />
-                </button>
-              ))}
+          <div className="bg-white/10 backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-xl overflow-hidden hover:border-[#00FFFF]/40 transition-all duration-300">
+            {/* Preview Header */}
+            <div className="p-6 border-b border-white/10">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-lg flex items-center justify-center">
+                    <Eye className="text-white" size={20} />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-[#F0F0F0]">
+                      Live Preview
+                    </h3>
+                    <p className="text-white/60 text-sm">
+                      Real-time preview of your branded portal
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  {/* Device Selector */}
+                  <div className="flex bg-black/20 rounded-lg p-1">
+                    {[
+                      { id: 'desktop', icon: Monitor },
+                      { id: 'tablet', icon: Tablet },
+                      { id: 'mobile', icon: Smartphone }
+                    ].map(({ id, icon: Icon }) => (
+                      <motion.button
+                        key={id}
+                        onClick={() => setPreviewDevice(id)}
+                        className={`p-2 rounded transition-colors ${
+                          previewDevice === id 
+                            ? 'bg-[#00FFFF]/20 text-[#00FFFF]' 
+                            : 'text-white/60 hover:text-white/80'
+                        }`}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <Icon size={16} />
+                      </motion.button>
+                    ))}
+                  </div>
+
+                  {/* Refresh Button */}
+                  <motion.button
+                    onClick={refreshPreview}
+                    className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    animate={isPreviewLoading ? { rotate: 360 } : {}}
+                    transition={{ duration: 1, ease: "linear" }}
+                  >
+                    <RefreshCw className="text-[#00FFFF]" size={16} />
+                  </motion.button>
+                </div>
+              </div>
+            </div>
+
+            {/* Preview Content */}
+            <div className="h-96 lg:h-[600px]">
+              <PreviewFrame />
             </div>
           </div>
 
-          {/* Preview Frame */}
-          <div className={`mx-auto bg-gray-900 rounded-lg overflow-hidden transition-all duration-300 ${
-            previewDevice === 'desktop' ? 'w-full h-96' :
-            previewDevice === 'tablet' ? 'w-80 h-96' :
-            'w-64 h-96'
-          }`}>
+          {/* Quick Actions */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <motion.div
-              className="w-full h-full bg-[#F0F8FF] relative overflow-hidden"
-              style={{
-                background: `linear-gradient(135deg, ${settings.primaryColor}10, ${settings.secondaryColor}10)`
-              }}
+              className="bg-white/10 backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-xl p-4 hover:border-[#00FFFF]/40 transition-all duration-300 cursor-pointer"
+              whileHover={{ scale: 1.02 }}
             >
-              {/* Mock Header */}
-              <div 
-                className="h-16 flex items-center justify-between px-6 text-white"
-                style={{
-                  background: `linear-gradient(135deg, ${settings.primaryColor}, ${settings.secondaryColor})`
-                }}
-              >
-                <div className="flex items-center gap-3">
-                  {settings.logo ? (
-                    <img src={settings.logo} alt="Logo" className="h-8" />
-                  ) : (
-                    <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                      <Palette className="w-4 h-4" />
-                    </div>
-                  )}
-                  <span className="font-bold">{settings.companyName}</span>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-[#00FFFF]/20 rounded-lg flex items-center justify-center">
+                  <LinkIcon className="text-[#00FFFF]" size={16} />
                 </div>
-                <div className="flex gap-4 text-sm">
-                  <span>Dashboard</span>
-                  <span>Reports</span>
-                  <span>Settings</span>
+                <div>
+                  <div className="text-[#F0F0F0] font-medium">Setup Domain</div>
+                  <div className="text-white/60 text-sm">Configure DNS settings</div>
                 </div>
               </div>
+            </motion.div>
 
-              {/* Mock Content */}
-              <div className="p-6 space-y-4">
-                <h2 className="text-xl font-bold text-[#0C0A1D]">Dashboard Overview</h2>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4">
-                    <div className="text-sm text-gray-600">Total Calls</div>
-                    <div className="text-2xl font-bold text-[#0C0A1D]">1,247</div>
-                  </div>
-                  <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4">
-                    <div className="text-sm text-gray-600">Success Rate</div>
-                    <div className="text-2xl font-bold text-[#0C0A1D]">87%</div>
-                  </div>
+            <motion.div
+              className="bg-white/10 backdrop-blur-[10px] border border-[#E42289]/20 rounded-xl p-4 hover:border-[#E42289]/40 transition-all duration-300 cursor-pointer"
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-[#E42289]/20 rounded-lg flex items-center justify-center">
+                  <Crown className="text-[#E42289]" size={16} />
                 </div>
-
-                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4">
-                  <div className="text-sm text-gray-600 mb-2">Recent Activity</div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div 
-                        className="w-2 h-2 rounded-full"
-                        style={{ backgroundColor: settings.primaryColor }}
-                      />
-                      <span className="text-sm">New call completed</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div 
-                        className="w-2 h-2 rounded-full"
-                        style={{ backgroundColor: settings.secondaryColor }}
-                      />
-                      <span className="text-sm">Agent joined queue</span>
-                    </div>
-                  </div>
+                <div>
+                  <div className="text-[#F0F0F0] font-medium">Premium Features</div>
+                  <div className="text-white/60 text-sm">Advanced customization</div>
                 </div>
-
-                <motion.button
-                  className="w-full py-2 text-white rounded-lg font-semibold"
-                  style={{
-                    background: `linear-gradient(135deg, ${settings.primaryColor}, ${settings.secondaryColor})`
-                  }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Start New Call
-                </motion.button>
               </div>
+            </motion.div>
 
-              {/* Transition Effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                animate={{ x: ['-100%', '100%'] }}
-                transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
-                style={{ width: '50%' }}
-              />
+            <motion.div
+              className="bg-white/10 backdrop-blur-[10px] border border-[#9333EA]/20 rounded-xl p-4 hover:border-[#9333EA]/40 transition-all duration-300 cursor-pointer"
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-[#9333EA]/20 rounded-lg flex items-center justify-center">
+                  <Settings className="text-[#9333EA]" size={16} />
+                </div>
+                <div>
+                  <div className="text-[#F0F0F0] font-medium">Advanced Settings</div>
+                  <div className="text-white/60 text-sm">Custom CSS & scripts</div>
+                </div>
+              </div>
             </motion.div>
           </div>
-
-          <p className="text-xs text-gray-500 text-center mt-4">
-            Preview updates in real-time as you modify settings
-          </p>
         </motion.div>
       </div>
     </div>
   );
 };
 
-export default WhiteLabel;
+export default WhiteLabelPage;

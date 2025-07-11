@@ -41,7 +41,7 @@ const ChatbotPage = () => {
       >
         <div>
           <h1 className="text-3xl font-bold text-[#00FFFF] mb-2">Chat Assistant</h1>
-          <p className="text-[#E42289]/70">Get help with your CallEase platform</p>
+          <p className="text-[#E42289]">Get help with your CallEase platform</p>
         </div>
       </motion.div>
 
@@ -49,7 +49,7 @@ const ChatbotPage = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg overflow-hidden h-[600px] flex flex-col"
+        className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl shadow-lg overflow-hidden h-[600px] flex flex-col"
       >
         {/* Chat Header */}
         <div className="p-4 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white">
@@ -80,18 +80,18 @@ const ChatbotPage = () => {
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                   message.type === 'user' 
                     ? 'bg-gradient-to-r from-[#E42289] to-[#00FFFF]' 
-                    : 'bg-gray-200'
+                    : 'bg-white/20'
                 }`}>
                   {message.type === 'user' ? (
                     <User className="w-4 h-4 text-white" />
                   ) : (
-                    <Bot className="w-4 h-4 text-gray-600" />
+                    <Bot className="w-4 h-4 text-white/80" />
                   )}
                 </div>
                 <div className={`p-3 rounded-lg ${
                   message.type === 'user'
                     ? 'bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white'
-                    : 'bg-gray-100 text-gray-800'
+                    : 'bg-black/20 text-[#F0F0F0]'
                 }`}>
                   <p className="text-sm">{message.content}</p>
                 </div>
@@ -101,7 +101,7 @@ const ChatbotPage = () => {
         </div>
 
         {/* Input */}
-        <div className="p-4 border-t border-gray-200">
+        <div className="p-4 border-t border-white/20">
           <div className="flex gap-2">
             <input
               type="text"
@@ -109,7 +109,7 @@ const ChatbotPage = () => {
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
               placeholder="Type your message..."
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289] bg-white/80"
+              className="flex-1 px-4 py-2 bg-black/20 border border-white/30 text-[#F0F0F0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289] placeholder-white/50"
             />
             <motion.button
               whileHover={{ scale: 1.05 }}

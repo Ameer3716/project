@@ -145,7 +145,7 @@ const DashboardOverview = () => {
             Dashboard Overview
           </motion.h1>
           <motion.p 
-            className="text-[#E42289]/70 mt-2"
+            className="text-white/90 font-medium mt-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
@@ -173,10 +173,10 @@ const DashboardOverview = () => {
             transition={{ delay: 0.4 }}
             value={selectedClient}
             onChange={(e) => setSelectedClient(e.target.value)}
-            className=" texxt-[white] px-6 py-3 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-[#F0F0F0] backdrop-blur-[10px] border border-[#E42289]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E42289]  font-medium shadow-lg"
+            className="px-6 py-3 bg-gradient-to-br from-[#E42289] to-[#00FFFF] backdrop-blur-sm border border-white/30 text-[#F0F0F0] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E42289] font-semibold shadow-lg"
           >
             {clients.map(client => (
-              <option key={client.id} value={client.id} className="bg-black text-[white]">
+              <option key={client.id} value={client.id} className="bg-black text-white">
                 {client.name}
               </option>
             ))}
@@ -197,7 +197,7 @@ const DashboardOverview = () => {
           <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[#F0F0F0]/70 text-sm font-medium">Total Calls</p>
+                <p className="text-[#F0F0F0]/80 text-sm font-bold">Total Calls</p>
                 <motion.p 
                   className="text-3xl font-bold text-[#F0F0F0] mt-1"
                   key={animatedNumbers.totalCalls}
@@ -234,7 +234,7 @@ const DashboardOverview = () => {
           <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[#F0F0F0]/70 text-sm font-medium">Appointments Set</p>
+                <p className="text-[#F0F0F0]/80 text-sm font-bold">Appointments Set</p>
                 <motion.p 
                   className="text-3xl font-bold text-[#F0F0F0] mt-1"
                   key={animatedNumbers.appointments}
@@ -271,7 +271,7 @@ const DashboardOverview = () => {
           <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[#F0F0F0]/70 text-sm font-medium">Avg Call Duration</p>
+                <p className="text-[#F0F0F0]/80 text-sm font-bold">Avg Call Duration</p>
                 <motion.p 
                   className="text-3xl font-bold text-[#F0F0F0] mt-1"
                   key={animatedNumbers.avgDuration}
@@ -302,7 +302,7 @@ const DashboardOverview = () => {
           <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[#F0F0F0]/70 text-sm font-medium">Active Connections</p>
+                <p className="text-[#F0F0F0]/80 text-sm font-bold">Active Connections</p>
                 <motion.p 
                   className="text-3xl font-bold text-[#F0F0F0] mt-1"
                   key={animatedNumbers.activeConnections}
@@ -348,7 +348,7 @@ const DashboardOverview = () => {
               <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[#F0F0F0]/70 text-sm font-medium">Team Productivity</p>
+                    <p className="text-[#F0F0F0]/80 text-sm font-bold">Team Productivity</p>
                     <motion.p 
                       className="text-3xl font-bold text-[#F0F0F0] mt-1"
                       key={animatedNumbers.teamScore}
@@ -380,7 +380,7 @@ const DashboardOverview = () => {
               <div className="relative bg-rgba(22, 21, 48, 0.6) backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[#F0F0F0]/70 text-sm font-medium">AI Customization</p>
+                    <p className="text-[#F0F0F0]/80 text-sm font-bold">AI Customization</p>
                     <motion.p 
                       className="text-3xl font-bold text-[#F0F0F0] mt-1"
                       key={animatedNumbers.aiLevel}
@@ -472,7 +472,7 @@ const DashboardOverview = () => {
                   </motion.div>
                 </motion.div>
                 <motion.p 
-                  className="text-sm text-[#F0F0F0]/70 mt-4 font-medium"
+                  className="text-sm text-[#F0F0F0] mt-4 font-bold"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1.2 + index * 0.1 }}

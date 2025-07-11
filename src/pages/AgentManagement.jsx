@@ -47,17 +47,17 @@ const AgentManagement = () => {
         className="flex justify-between items-center"
       >
         <div>
-          <h1 className="text-3xl font-bold text-[#00FFFF] mb-2">Agent Management</h1>
-          <p className="text-[#E42289]">Manage agents, permissions, and client assignments</p>
+          <h1 className="text-3xl font-bold text-[#E42289] mb-2">Agent Management</h1>
+          <p className="text-[#00FFFF]">Manage agents, permissions, and client assignments</p>
         </div>
         <div className="flex items-center gap-4">
           <select
             value={selectedClient}
             onChange={(e) => setSelectedClient(e.target.value)}
-            className="px-4 py-2 bg-white/70 backdrop-blur-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289]"
+            className="px-4 py-2 bg-gradient-to-br from-[#E42289]/60 to-[#00FFFF] border-white/30 text-[black] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289]"
           >
             {clients.map(client => (
-              <option key={client.id} value={client.id}>
+              <option key={client.id} value={client.id} className="bg-gradient-to-br from-[#E42289] to-[#00FFFF] text-black">
                 {client.name}
               </option>
             ))}
@@ -65,7 +65,7 @@ const AgentManagement = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white rounded-lg font-semibold flex items-center gap-2 shadow-lg"
+            className="px-6 py-3 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white/80 rounded-lg font-semibold flex items-center gap-2 shadow-lg"
           >
             <UserPlus className="w-4 h-4" />
             Add Agent
@@ -74,7 +74,7 @@ const AgentManagement = () => {
       </motion.div>
 
       {/* Tabs */}
-      <div className="flex space-x-1 bg-white/50 backdrop-blur-sm rounded-lg p-1">
+      <div className="flex space-x-1 bg-black/20 backdrop-blur-sm rounded-lg p-1 border border-white/20">
         {['agents', 'permissions', 'sub-accounts'].map((tab) => (
           <button
             key={tab}
@@ -82,7 +82,7 @@ const AgentManagement = () => {
             className={`flex-1 py-2 px-4 rounded-md font-medium transition-all duration-200 capitalize ${
               activeTab === tab
                 ? 'bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white shadow-lg'
-                : 'text-gray-600 hover:text-[#0C0A1D]'
+                : 'text-[#F0F0F0]/70 hover:text-white'
             }`}
           >
             {tab.replace('-', ' ')}
@@ -94,11 +94,11 @@ const AgentManagement = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg overflow-hidden"
+          className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl shadow-lg overflow-hidden"
         >
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white">
+              <thead className="bg-gradient-to-br from-[#E42289]/80 to-[#00FFFF]/80 text-black">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Agent</th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Role</th>
@@ -108,14 +108,14 @@ const AgentManagement = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-white/20">
                 {filteredAgents.map((agent, index) => (
                   <motion.tr
                     key={agent.id}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="hover:bg-white/50 transition-colors duration-200"
+                    className="hover:bg-white/10 transition-colors duration-200"
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
@@ -123,15 +123,15 @@ const AgentManagement = () => {
                           {agent.name.split(' ').map(n => n[0]).join('')}
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-gray-900">{agent.name}</div>
-                          <div className="text-sm text-gray-500">{agent.email}</div>
+                          <div className="text-sm font-medium text-[#F0F0F0]">{agent.name}</div>
+                          <div className="text-sm text-[#F0F0F0]/80">{agent.email}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#F0F0F0]/80">
                       {agent.role}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#F0F0F0]/80">
                       {agent.client}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -139,7 +139,7 @@ const AgentManagement = () => {
                         {agent.permissions.map(permission => (
                           <span
                             key={permission}
-                            className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
+                            className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-500/20 text-blue-300"
                           >
                             {permission}
                           </span>
@@ -149,8 +149,8 @@ const AgentManagement = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                         agent.status === 'active' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-red-100 text-red-800'
+                          ? 'bg-green-500/20 text-green-300' 
+                          : 'bg-red-500/20 text-red-300'
                       }`}>
                         {agent.status}
                       </span>
@@ -158,9 +158,9 @@ const AgentManagement = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex gap-2">
                         <button className="text-[#E42289] hover:text-[#00FFFF] transition-colors duration-200">
-                          <Eye className="w-4 h-4" />
+                          <Eye className="w-4 h-4 bg-amber-50" />
                         </button>
-                        <button className="text-gray-600 hover:text-gray-900 transition-colors duration-200">
+                        <button className="text-white/70 hover:text-white transition-colors duration-200">
                           <Settings className="w-4 h-4" />
                         </button>
                       </div>
@@ -185,22 +185,22 @@ const AgentManagement = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg"
+              className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl p-6 shadow-lg"
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 bg-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-lg flex items-center justify-center">
                   <Key className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#0C0A1D]">{permission.name}</h3>
-                  <p className="text-sm text-gray-600">{permission.description}</p>
+                  <h3 className="font-semibold text-white/90">{permission.name}</h3>
+                  <p className="text-sm text-[#F0F0F0]/80">{permission.description}</p>
                 </div>
               </div>
               
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Agents with access:</span>
-                  <span className="font-semibold text-[#0C0A1D]">
+                  <span className="text-sm text-[#F0F0F0]/80">Agents with access:</span>
+                  <span className="font-semibold text-[#F0F0F0]">
                     {agents.filter(agent => agent.permissions.includes(permission.id)).length}
                   </span>
                 </div>
@@ -226,10 +226,10 @@ const AgentManagement = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg"
+                className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl p-6 shadow-lg"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-bold text-[#0C0A1D]">{account.name}</h3>
+                  <h3 className="text-lg font-bold text-white/90">{account.name}</h3>
                   <div className="w-10 h-10 bg-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-lg flex items-center justify-center">
                     <Shield className="w-5 h-5 text-white" />
                   </div>
@@ -237,16 +237,16 @@ const AgentManagement = () => {
 
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Agents:</span>
-                    <span className="font-semibold text-[#0C0A1D]">{account.agents}</span>
+                    <span className="text-sm text-[#F0F0F0]/80">Agents:</span>
+                    <span className="font-semibold text-[#F0F0F0]">{account.agents}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Total Calls:</span>
-                    <span className="font-semibold text-[#0C0A1D]">{account.calls.toLocaleString()}</span>
+                    <span className="text-sm text-[#F0F0F0]/80">Total Calls:</span>
+                    <span className="font-semibold text-[#F0F0F0]">{account.calls.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Status:</span>
-                    <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                    <span className="text-sm text-[#F0F0F0]/80">Status:</span>
+                    <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-500/20 text-green-300">
                       {account.status}
                     </span>
                   </div>
@@ -256,7 +256,7 @@ const AgentManagement = () => {
                   <button className="flex-1 px-3 py-2 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white text-sm rounded-lg hover:shadow-lg transition-all duration-200">
                     Manage
                   </button>
-                  <button className="px-3 py-2 border border-gray-300 text-gray-700 text-sm rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                  <button className="px-3 py-2 border border-white/30 text-white/70 text-sm rounded-lg hover:bg-black/20 transition-colors duration-200">
                     <Settings className="w-4 h-4" />
                   </button>
                 </div>

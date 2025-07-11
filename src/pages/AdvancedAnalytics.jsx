@@ -86,7 +86,7 @@ const AdvancedAnalytics = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 bg-white/70 backdrop-blur-sm border border-gray-200 text-[#0C0A1D] rounded-lg font-semibold flex items-center gap-2 shadow-lg"
+            className="px-6 py-3 bg-gradient-to-r from-[#E42289] to-[#00FFFF]/20 border-white/30 border text-[white] rounded-lg font-semibold flex items-center gap-2 shadow-lg"
           >
             <Download className="w-4 h-4" />
             Export Dashboard
@@ -106,9 +106,9 @@ const AdvancedAnalytics = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg"
+        className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl p-6 shadow-lg"
       >
-        <h3 className="text-lg font-bold text-[#0C0A1D] mb-4">Widget Library</h3>
+        <h3 className="text-lg font-bold text-white/90 mb-4">Widget Library</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {availableWidgets.map((widget, index) => (
             <motion.button
@@ -120,7 +120,7 @@ const AdvancedAnalytics = () => {
               className="p-4 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white rounded-lg hover:shadow-lg transition-all duration-200 flex flex-col items-center gap-2"
             >
               <widget.icon className="w-6 h-6" />
-              <span className="text-sm font-medium text-center">{widget.title}</span>
+              <span className="text-sm font-medium text-center text-[white]">{widget.title}</span>
             </motion.button>
           ))}
         </div>
@@ -133,13 +133,13 @@ const AdvancedAnalytics = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg"
+          className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl p-6 shadow-lg"
         >
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-bold text-[#0C0A1D]">Call Outcome Analysis</h3>
+            <h3 className="text-lg font-bold text-white/90">Call Outcome Analysis</h3>
             <button
               onClick={() => removeWidget(1)}
-              className="text-gray-400 hover:text-red-500 transition-colors duration-200"
+              className="text-white/50 hover:text-red-500 transition-colors duration-200 text-xl font-bold"
             >
               ×
             </button>
@@ -156,10 +156,10 @@ const AdvancedAnalytics = () => {
               >
                 <div className="flex-1">
                   <div className="flex justify-between items-center mb-1">
-                    <span className="text-sm font-medium text-gray-700">{outcome.outcome}</span>
-                    <span className="text-sm text-gray-600">{outcome.count}</span>
+                    <span className="text-sm font-medium text-[#F0F0F0]/80">{outcome.outcome}</span>
+                    <span className="text-sm text-[#F0F0F0]/80">{outcome.count}</span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="w-full bg-white/30 rounded-full h-2">
                     <motion.div
                       className="h-2 bg-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-full"
                       initial={{ width: 0 }}
@@ -178,13 +178,13 @@ const AdvancedAnalytics = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg"
+          className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl p-6 shadow-lg"
         >
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-bold text-[#0C0A1D]">Sentiment Trends</h3>
+            <h3 className="text-lg font-bold text-white/90">Sentiment Trends</h3>
             <button
               onClick={() => removeWidget(2)}
-              className="text-gray-400 hover:text-red-500 transition-colors duration-200"
+              className="text-white/50 hover:text-red-500 transition-colors duration-200 text-xl font-bold"
             >
               ×
             </button>
@@ -213,7 +213,7 @@ const AdvancedAnalytics = () => {
                     transition={{ delay: 0.6 + index * 0.1, duration: 0.8 }}
                   />
                 </div>
-                <p className="text-xs text-gray-600 mt-2">{day.day}</p>
+                <p className="text-xs text-[#F0F0F0]/80 mt-2">{day.day}</p>
               </div>
             ))}
           </div>
@@ -221,15 +221,15 @@ const AdvancedAnalytics = () => {
           <div className="flex justify-center gap-4 mt-4 text-xs">
             <div className="flex items-center gap-1">
               <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-              <span>Positive</span>
+              <span className="text-[#F0F0F0]/80">Positive</span>
             </div>
             <div className="flex items-center gap-1">
               <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-              <span>Neutral</span>
+              <span className="text-[#F0F0F0]/80">Neutral</span>
             </div>
             <div className="flex items-center gap-1">
               <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-              <span>Negative</span>
+              <span className="text-[#F0F0F0]/80">Negative</span>
             </div>
           </div>
         </motion.div>
@@ -239,13 +239,13 @@ const AdvancedAnalytics = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg"
+          className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl p-6 shadow-lg"
         >
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-bold text-[#0C0A1D]">Agent Performance Leaderboard</h3>
+            <h3 className="text-lg font-bold text-white/90">Agent Performance Leaderboard</h3>
             <button
               onClick={() => removeWidget(3)}
-              className="text-gray-400 hover:text-red-500 transition-colors duration-200"
+              className="text-white/50 hover:text-red-500 transition-colors duration-200 text-xl font-bold"
             >
               ×
             </button>
@@ -258,24 +258,24 @@ const AdvancedAnalytics = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.7 + index * 0.1 }}
-                className="flex items-center justify-between p-3 bg-white/50 rounded-lg"
+                className="flex items-center justify-between p-3 bg-white/20 rounded-lg"
               >
                 <div className="flex items-center gap-3">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm ${
                     agent.rank === 1 ? 'bg-yellow-500' : 
-                    agent.rank === 2 ? 'bg-gray-400' : 
-                    agent.rank === 3 ? 'bg-orange-500' : 'bg-gray-300'
+                    agent.rank === 2 ? 'bg-white-400' : 
+                    agent.rank === 3 ? 'bg-orange-500' : 'bg-white-500'
                   }`}>
                     {agent.rank}
                   </div>
                   <div>
-                    <div className="font-semibold text-[#0C0A1D]">{agent.name}</div>
-                    <div className="text-xs text-gray-600">{agent.calls} calls • {agent.conversion} conversions</div>
+                    <div className="font-semibold text-[#F0F0F0]">{agent.name}</div>
+                    <div className="text-xs text-[#F0F0F0]/80">{agent.calls} calls • {agent.conversion} conversions</div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold text-[#0C0A1D]">{agent.score}</div>
-                  <div className="text-xs text-gray-600">Score</div>
+                  <div className="font-bold text-[#F0F0F0]">{agent.score}</div>
+                  <div className="text-xs text-[#F0F0F0]/80">Score</div>
                 </div>
               </motion.div>
             ))}
@@ -287,16 +287,16 @@ const AdvancedAnalytics = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg"
+          className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl p-6 shadow-lg"
         >
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-bold text-[#0C0A1D] flex items-center gap-2">
+            <h3 className="text-lg font-bold text-white/90 flex items-center gap-2">
               <Brain className="w-5 h-5" />
               AI Insights Engine
             </h3>
             <button
               onClick={() => removeWidget(4)}
-              className="text-gray-400 hover:text-red-500 transition-colors duration-200"
+              className="text-white/50 hover:text-red-500 transition-colors duration-200 text-xl font-bold"
             >
               ×
             </button>
@@ -314,7 +314,7 @@ const AdvancedAnalytics = () => {
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                 />
-                <p className="text-gray-600">Analyzing data patterns...</p>
+                <p className="text-[#F0F0F0]/80">Analyzing data patterns...</p>
               </motion.div>
             ) : aiInsight ? (
               <motion.div
@@ -325,7 +325,7 @@ const AdvancedAnalytics = () => {
                 <div className="w-12 h-12 bg-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-full flex items-center justify-center mx-auto">
                   <Lightbulb className="w-6 h-6 text-white" />
                 </div>
-                <p className="text-[#0C0A1D] font-medium">{aiInsight}</p>
+                <p className="text-[#F0F0F0] font-medium">{aiInsight}</p>
                 <button
                   onClick={generateAIInsight}
                   className="px-4 py-2 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white rounded-lg text-sm hover:shadow-lg transition-all duration-200"
@@ -339,13 +339,13 @@ const AdvancedAnalytics = () => {
                 animate={{ opacity: 1 }}
                 className="space-y-4"
               >
-                <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mx-auto">
-                  <Brain className="w-6 h-6 text-gray-400" />
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto">
+                  <Brain className="w-6 h-6 text-white/50" />
                 </div>
-                <p className="text-gray-600">Click to generate AI-powered insights from your data</p>
+                <p className="text-[#F0F0F0]/80">Click to generate AI-powered insights from your data</p>
                 <button
                   onClick={generateAIInsight}
-                  className="px-6 py-3 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-200"
+                  className="px-6 py-3 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-lg font-semibold hover:shadow-lg transition-all duration-200"
                 >
                   Generate Insights
                 </button>

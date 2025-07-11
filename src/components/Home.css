@@ -1,0 +1,79 @@
+/* src/Homepage.css */
+@import "tailwindcss";
+/* --- Keyframe Animations --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes vibrate {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-2px); }
+}
+
+@keyframes infinite-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* --- Utility Classes (for Tailwind) --- */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .animate-vibrate {
+    animation: vibrate 0.3s linear 3s 3; /* Wait 3s, then vibrate 3 times */
+  }
+
+  .animate-infinite-scroll {
+    /* Adjust duration as needed. 10 items * 4s/item = 40s */
+    animation: infinite-scroll 40s linear infinite;
+  }
+
+  .mask-image-gradient {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+  }
+}/* src/Homepage.css */
+
+/* --- Keyframe Animations --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes vibrate {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-2px); }
+}
+
+@keyframes infinite-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* --- Utility Classes (for Tailwind) --- */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .animate-vibrate {
+    animation: vibrate 0.3s linear 3s 3; /* Wait 3s, then vibrate 3 times */
+  }
+
+  .animate-infinite-scroll {
+    /* Adjust duration as needed. 10 items * 4s/item = 40s */
+    animation: infinite-scroll 40s linear infinite;
+  }
+
+  .mask-image-gradient {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+  }
+}

@@ -1,221 +1,346 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FileText, Download, Calendar, TrendingUp, TrendingDown, BarChart3 } from 'lucide-react';
+import { 
+  BarChart3, 
+  TrendingUp, 
+  TrendingDown, 
+  Phone, 
+  Clock, 
+  Target,
+  Calendar,
+  Filter
+} from 'lucide-react';
+import {
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend
+} from 'recharts';
 
-const Reports = () => {
-  const [selectedPeriod, setSelectedPeriod] = useState('7days');
-  const [selectedReport, setSelectedReport] = useState('overview');
+const ReportsPage = () => {
+  const [dateRange, setDateRange] = useState('7d');
 
-  const reportTypes = [
-    { id: 'overview', name: 'Overview', icon: BarChart3 },
-    { id: 'calls', name: 'Call Analytics', icon: FileText },
-    { id: 'performance', name: 'Performance', icon: TrendingUp },
+  // Sample data
+  const callVolumeData = [
+    { date: 'Jan 8', totalCalls: 45, avgDuration: 4.2 },
+    { date: 'Jan 9', totalCalls: 52, avgDuration: 3.8 },
+    { date: 'Jan 10', totalCalls: 38, avgDuration: 5.1 },
+    { date: 'Jan 11', totalCalls: 61, avgDuration: 4.7 },
+    { date: 'Jan 12', totalCalls: 49, avgDuration: 3.9 },
+    { date: 'Jan 13', totalCalls: 67, avgDuration: 4.3 },
+    { date: 'Jan 14', totalCalls: 58, avgDuration: 4.8 },
   ];
 
-  const metrics = [
-    { name: 'Total Calls', value: '1,247', change: '+12%', trend: 'up' },
-    { name: 'Success Rate', value: '87%', change: '+5%', trend: 'up' },
-    { name: 'Avg Duration', value: '4:32', change: '-8%', trend: 'down' },
-    { name: 'Conversion Rate', value: '23%', change: '+15%', trend: 'up' },
+  const callOutcomesData = [
+    { name: 'Appointment Booked', value: 35, color: '#00FFFF' },
+    { name: 'Lead Captured', value: 28, color: '#E42289' },
+    { name: 'Query Resolved', value: 22, color: '#9333EA' },
+    { name: 'Follow-up Required', value: 15, color: '#F59E0B' },
   ];
 
-  const callData = [
-    { time: '00:00', inbound: 12, outbound: 8 },
-    { time: '04:00', inbound: 8, outbound: 5 },
-    { time: '08:00', inbound: 45, outbound: 32 },
-    { time: '12:00', inbound: 67, outbound: 41 },
-    { time: '16:00', inbound: 52, outbound: 38 },
-    { time: '20:00', inbound: 28, outbound: 15 },
+  const busiestHoursData = [
+    { hour: '9 AM', calls: 12 },
+    { hour: '10 AM', calls: 18 },
+    { hour: '11 AM', calls: 25 },
+    { hour: '12 PM', calls: 22 },
+    { hour: '1 PM', calls: 15 },
+    { hour: '2 PM', calls: 28 },
+    { hour: '3 PM', calls: 32 },
+    { hour: '4 PM', calls: 24 },
+    { hour: '5 PM', calls: 16 },
   ];
 
-  const maxCalls = Math.max(...callData.flatMap(d => [d.inbound, d.outbound]));
+  const kpiData = [
+    {
+      title: 'Total Calls Handled',
+      value: '1,247',
+      change: '+15%',
+      trend: 'up',
+      icon: Phone,
+      color: '#00FFFF'
+    },
+    {
+      title: 'Average Call Duration',
+      value: '4.2 min',
+      change: '-8%',
+      trend: 'down',
+      icon: Clock,
+      color: '#E42289'
+    },
+    {
+      title: 'Conversion Rate',
+      value: '68%',
+      change: '+12%',
+      trend: 'up',
+      icon: Target,
+      color: '#9333EA'
+    },
+    {
+      title: 'Appointments Booked',
+      value: '342',
+      change: '+23%',
+      trend: 'up',
+      icon: Calendar,
+      color: '#F59E0B'
+    }
+  ];
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-black/80 backdrop-blur-sm border border-[#00FFFF]/30 rounded-lg p-3">
+          <p className="text-[#F0F0F0] font-medium">{label}</p>
+          {payload.map((entry, index) => (
+            <p key={index} className="text-sm" style={{ color: entry.color }}>
+              {entry.name}: {entry.value}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <div className="p-8 space-y-8">
+      {/* Page Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex justify-between items-center"
+        className="flex items-center justify-between"
       >
         <div>
-          <h1 className="text-3xl font-bold text-[#00FFFF] mb-2">Reports</h1>
-          <p className=" text-[#E42289]">Analyze your call performance and metrics</p>
+          <h1 className="text-4xl font-bold text-[#E42289] mb-2">
+            Analytics Dashboard
+          </h1>
+          <p className="text-[#00FFFF]/80">
+            Performance Metrics & Intelligence Center
+          </p>
         </div>
-        <div className="flex items-center gap-4">
+        
+        {/* Date Range Picker */}
+        <div className="flex items-center gap-2">
+          <Filter className="text-white/60 " size={20} />
           <select
-            value={selectedPeriod}
-            onChange={(e) => setSelectedPeriod(e.target.value)}
-            className="px-4 py-2 bg-white/70 backdrop-blur-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289]"
+            value={dateRange}
+            onChange={(e) => setDateRange(e.target.value)}
+            className="px-4 py-2 bg-gradient-to-br from-[#E42289] to-[#00FFFF] backdrop-blur-sm border border-white/20 rounded-lg text-[#F0F0F0] focus:border-[#00FFFF] focus:outline-none focus:ring-2 focus:ring-[#00FFFF]/20 transition-all duration-300"
           >
-            <option value="7days">Last 7 Days</option>
-            <option value="30days">Last 30 Days</option>
-            <option value="90days">Last 90 Days</option>
+            <option value="7d" className="bg-black/80">Last 7 Days</option>
+            <option value="30d" className="bg-black/80">Last 30 Days</option>
+            <option value="90d" className="bg-black/80">Last 90 Days</option>
           </select>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white rounded-lg font-semibold flex items-center gap-2 shadow-lg"
-          >
-            <Download className="w-4 h-4" />
-            Export
-          </motion.button>
         </div>
       </motion.div>
 
-      {/* Report Type Tabs */}
-      <div className="flex space-x-1 bg-white/50 backdrop-blur-sm rounded-lg p-1">
-        {reportTypes.map((type) => (
-          <button
-            key={type.id}
-            onClick={() => setSelectedReport(type.id)}
-            className={`flex-1 py-3 px-4 rounded-md font-medium transition-all duration-200 flex items-center justify-center gap-2 ${
-              selectedReport === type.id
-                ? 'bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white shadow-lg'
-                : 'text-gray-600 hover:text-[#0C0A1D]'
-            }`}
-          >
-            <type.icon className="w-4 h-4" />
-            {type.name}
-          </button>
-        ))}
-      </div>
-
-      {/* Metrics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {metrics.map((metric, index) => (
+      {/* KPI Cards */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        {kpiData.map((kpi, index) => (
           <motion.div
-            key={metric.name}
+            key={kpi.title}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg"
+            transition={{ delay: 0.1 * index }}
+            className="bg-white/10 backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-xl p-6 hover:border-[#00FFFF]/40 transition-all duration-300"
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-600 text-sm font-medium">{metric.name}</p>
-                <p className="text-3xl font-bold text-[#0C0A1D] mt-1">{metric.value}</p>
-                <div className="flex items-center mt-2">
-                  {metric.trend === 'up' ? (
-                    <TrendingUp className="w-4 h-4 text-green-500 mr-1" />
-                  ) : (
-                    <TrendingDown className="w-4 h-4 text-red-500 mr-1" />
-                  )}
-                  <span className={`text-sm font-medium ${
-                    metric.trend === 'up' ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    {metric.change}
-                  </span>
-                </div>
+            <div className="flex items-center justify-between mb-4">
+              <div 
+                className="w-12 h-12 rounded-lg flex items-center justify-center"
+                style={{ backgroundColor: `${kpi.color}20` }}
+              >
+                <kpi.icon className="text-white" size={24} style={{ color: kpi.color }} />
+              </div>
+              <div className={`flex items-center gap-1 text-sm font-medium ${
+                kpi.trend === 'up' ? 'text-green-400' : 'text-red-400'
+              }`}>
+                {kpi.trend === 'up' ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
+                {kpi.change}
+              </div>
+            </div>
+            <div>
+              <div 
+                className="text-3xl font-bold mb-1"
+                style={{ color: kpi.color }}
+              >
+                {kpi.value}
+              </div>
+              <div className="text-white/60 text-sm">
+                {kpi.title}
               </div>
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      {/* Call Volume Chart */}
+      {/* Main Chart */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg"
+        className="bg-white/10 backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-xl p-6 hover:border-[#00FFFF]/40 transition-all duration-300"
       >
-        <div className="flex justify-between items-center mb-6">
-          <h3 className="text-xl font-bold text-[#0C0A1D]">Call Volume by Hour</h3>
-          <div className="flex items-center gap-4 text-sm">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-[#E42289] rounded-full"></div>
-              <span>Inbound</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-[#00FFFF] rounded-full"></div>
-              <span>Outbound</span>
-            </div>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-12 h-12 bg-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-lg flex items-center justify-center">
+            <BarChart3 className="text-white" size={24} />
           </div>
+          <h2 className="text-2xl font-bold text-[#F0F0F0]">
+            Call Volume & Duration Over Time
+          </h2>
         </div>
 
-        <div className="h-64 flex items-end justify-between space-x-4">
-          {callData.map((item, index) => (
-            <div key={item.time} className="flex flex-col items-center flex-1">
-              <div className="w-full flex items-end gap-1 h-48">
-                <motion.div
-                  className="flex-1 bg-[#E42289] rounded-t-lg"
-                  initial={{ height: 0 }}
-                  animate={{ height: `${(item.inbound / maxCalls) * 180}px` }}
-                  transition={{ delay: 0.5 + index * 0.1, duration: 0.8 }}
-                />
-                <motion.div
-                  className="flex-1 bg-[#00FFFF] rounded-t-lg"
-                  initial={{ height: 0 }}
-                  animate={{ height: `${(item.outbound / maxCalls) * 180}px` }}
-                  transition={{ delay: 0.5 + index * 0.1, duration: 0.8 }}
-                />
-              </div>
-              <p className="text-xs text-gray-600 mt-2 font-medium">{item.time}</p>
-            </div>
-          ))}
+        <div className="h-80">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={callVolumeData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+              <XAxis 
+                dataKey="date" 
+                stroke="rgba(240,240,240,0.8)"
+                fontSize={12}
+              />
+              <YAxis 
+                yAxisId="calls"
+                stroke="rgba(240,240,240,0.8)"
+                fontSize={12}
+              />
+              <YAxis 
+                yAxisId="duration"
+                orientation="right"
+                stroke="rgba(240,240,240,0.8)"
+                fontSize={12}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend />
+              <Line
+                yAxisId="calls"
+                type="monotone"
+                dataKey="totalCalls"
+                stroke="#00FFFF"
+                strokeWidth={3}
+                dot={{ fill: '#00FFFF', strokeWidth: 2, r: 6 }}
+                name="Total Calls"
+                animationDuration={2000}
+              />
+              <Line
+                yAxisId="duration"
+                type="monotone"
+                dataKey="avgDuration"
+                stroke="#E42289"
+                strokeWidth={3}
+                dot={{ fill: '#E42289', strokeWidth: 2, r: 6 }}
+                name="Avg Duration (min)"
+                animationDuration={2000}
+                animationDelay={500}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </motion.div>
 
-      {/* Detailed Reports Table */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg overflow-hidden"
-      >
-        <div className="p-6 border-b border-gray-200">
-          <h3 className="text-xl font-bold text-[#0C0A1D]">Detailed Call Reports</h3>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Calls</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Success Rate</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg Duration</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {[
-                { date: '2024-01-15', calls: 187, success: '89%', duration: '4:32', revenue: '$2,340' },
-                { date: '2024-01-14', calls: 156, success: '85%', duration: '4:18', revenue: '$1,980' },
-                { date: '2024-01-13', calls: 203, success: '91%', duration: '4:45', revenue: '$2,670' },
-                { date: '2024-01-12', calls: 142, success: '82%', duration: '4:12', revenue: '$1,750' },
-                { date: '2024-01-11', calls: 178, success: '87%', duration: '4:28', revenue: '$2,230' },
-              ].map((row, index) => (
-                <motion.tr
-                  key={row.date}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7 + index * 0.1 }}
-                  className="hover:bg-white/50 transition-colors duration-200"
+      {/* Donut Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Call Outcomes */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.6 }}
+          className="bg-white/10 backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-xl p-6 hover:border-[#00FFFF]/40 transition-all duration-300"
+        >
+          <h3 className="text-xl font-bold text-[#F0F0F0] mb-6">
+            Call Outcomes
+          </h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={callOutcomesData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={100}
+                  paddingAngle={5}
+                  dataKey="value"
+                  animationDuration={1500}
                 >
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {row.date}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {row.calls}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {row.success}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {row.duration}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-green-600">
-                    {row.revenue}
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </motion.div>
+                  {callOutcomesData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip content={<CustomTooltip />} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="grid grid-cols-2 gap-2 mt-4">
+            {callOutcomesData.map((item) => (
+              <div key={item.name} className="flex items-center gap-2">
+                <div 
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: item.color }}
+                />
+                <span className="text-white/80 text-sm">{item.name}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Busiest Hours */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.8 }}
+          className="bg-white/10 backdrop-blur-[10px] border border-[#00FFFF]/20 rounded-xl p-6 hover:border-[#00FFFF]/40 transition-all duration-300"
+        >
+          <h3 className="text-xl font-bold text-[#F0F0F0] mb-6">
+            Busiest Hours
+          </h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={busiestHoursData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                <XAxis 
+                  dataKey="hour" 
+                  stroke="rgba(240,240,240,0.8)"
+                  fontSize={12}
+                />
+                <YAxis 
+                  stroke="rgba(240,240,240,0.8)"
+                  fontSize={12}
+                />
+                <Tooltip content={<CustomTooltip />} />
+                <Area
+                  type="monotone"
+                  dataKey="calls"
+                  stroke="#9333EA"
+                  fill="url(#colorGradient)"
+                  strokeWidth={2}
+                  animationDuration={2000}
+                />
+                <defs>
+                  <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#9333EA" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="#9333EA" stopOpacity={0.1}/>
+                  </linearGradient>
+                </defs>
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 };
 
-export default Reports;
+export default ReportsPage;

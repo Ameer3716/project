@@ -1,18 +1,30 @@
 // src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
-import Navbar from './components/Navbar';
-import DashboardLayout from './components/DashboardLayout';
-import ProtectedRoute from './components/ProtectedRoute';
+import { BrowserRouter as Router, Routes, Route, Navigate,useLocation} from 'react-router-dom';
+import { AuthProvider } from './Contexts/AuthContext';
 
-// Dashboard Pages
+// Hooks and General Components
+import useSmoothScroll from '../hooks/useSmoothScroll';
+import Navbar from './Components/Navbar';
+import Footer from './Components/Footer';
+import ProtectedRoute from './Components/ProtectedRoute';
+import DashboardLayout from './Components/DashboardLayout';
+
+// --- Public Facing Pages ---
+import Home from './Components/Home';
+import Pricing from './Components/Pricing';
+import SuccessPage from './Components/SuccessPage';
+import ContactPage from './Components/ContactPage';
+import AboutPage from './Components/AboutPage';
+import BlogPage from './Components/BlogPage';
+
+// --- Dashboard Pages (New Structure) ---
 import DashboardOverview from './pages/DashboardOverview';
 import CallManager from './pages/CallManager';
 import Scheduler from './pages/Scheduler';
 import CRMSync from './pages/CRMSync';
 import Reports from './pages/Reports';
-import ChatbotPage from './pages/ChatbotPage';
+import ChatbotPage from './pages/ChatbotPage'; // Use the single, correct import
 import AIStudio from './pages/AIStudio';
 import CallFlows from './pages/CallFlows';
 import TeamHub from './pages/TeamHub';
@@ -20,40 +32,63 @@ import AgentManagement from './pages/AgentManagement';
 import AdvancedAnalytics from './pages/AdvancedAnalytics';
 import WhiteLabel from './pages/WhiteLabel';
 import SupportCenter from './pages/SupportCenter';
-import ProDashboard from './pages/ProDashboard';
 
+const AppFooter = () => {
+  const location = useLocation();
+  // If the current path starts with /dashboard, don't render the footer
+  if (location.pathname.startsWith('/dashboard')) {
+    return null;
+  }
+  return <Footer />;
+};
 function App() {
+  useSmoothScroll();
+
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-[#0C0A1D]">
-          <Navbar />
-          <Routes>
-            <Route
-              path="/dashboard/*"
-              element={
-                <ProtectedRoute>
-                  <DashboardLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<DashboardOverview />} />
-              <Route path="call-manager" element={<CallManager />} />
-              <Route path="scheduler" element={<Scheduler />} />
-              <Route path="crm-sync" element={<CRMSync />} />
-              <Route path="reports" element={<Reports />} />
-              <Route path="chatbot" element={<ChatbotPage />} />
-              <Route path="ai-studio" element={<AIStudio />} />
-              <Route path="call-flows" element={<CallFlows />} />
-              <Route path="team-hub" element={<TeamHub />} />
-              <Route path="agent-management" element={<AgentManagement />} />
-              <Route path="advanced-analytics" element={<AdvancedAnalytics />} />
-              <Route path="white-label" element={<WhiteLabel />} />
-              <Route path="support-center" element={<SupportCenter />} />
-            </Route>
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
-          </Routes>
-        </div>
+        {/* Navbar is rendered for all pages, which is fine */}
+        <Navbar />
+        <Routes>
+          {/* --- Public Routes --- */}
+          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/success" element={<SuccessPage />} />
+          {/* --- Protected Dashboard Routes --- */}
+          <Route
+            path="/dashboard" // Use path="/dashboard" for clarity, the Outlet handles nesting
+            element={
+              <ProtectedRoute>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }
+          >
+            {/* The index route for /dashboard */}
+            <Route index element={<DashboardOverview />} />
+
+            {/* All tiered feature routes */}
+            <Route path="call-manager" element={<CallManager />} />
+            <Route path="scheduler" element={<Scheduler />} />
+            <Route path="crm-sync" element={<CRMSync />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="chatbot" element={<ChatbotPage />} />
+            <Route path="ai-studio" element={<AIStudio />} />
+            <Route path="call-flows" element={<CallFlows />} />
+            <Route path="team-hub" element={<TeamHub />} />
+            <Route path="agent-management" element={<AgentManagement />} />
+            <Route path="advanced-analytics" element={<AdvancedAnalytics />} />
+            <Route path="white-label" element={<WhiteLabel />} />
+            <Route path="support-center" element={<SupportCenter />} />
+          </Route>
+
+          {/* Fallback route to redirect any unknown URL to the homepage */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        {/* Footer is rendered for all pages. See note below. */}
+        <AppFooter />
       </Router>
     </AuthProvider>
   );

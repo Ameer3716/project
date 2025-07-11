@@ -41,11 +41,17 @@ const Navbar = () => {
       return (
         <div className={`flex items-center gap-4 ${isMobile ? 'flex-col' : ''}`}>
           {user.isSubscribed && (
-            <Link to="/dashboard" onClick={closeMenu} className="text-[#F0F0F0] hover:text-[#00FFFF] transition-colors duration-200">
+            <Link
+              to="/dashboard"
+              onClick={closeMenu}
+              className="bg-gradient-to-r from-[#E42289]/60 to-[#00FFFF]/60 bg-clip-text text-transparent font-semibold transition-colors duration-200"
+            >
               Dashboard
             </Link>
           )}
-          <span className="text-gray-300">Hi, {user.name.split(' ')[0]}!</span>
+          <span className="bg-gradient-to-r from-[#E42289]/60 to-[#00FFFF]/60 bg-clip-text text-transparent font-semibold">
+            Hi, {user.name.split(' ')[0]}!
+          </span>
         </div>
       );
     }

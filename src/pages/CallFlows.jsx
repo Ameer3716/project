@@ -50,7 +50,7 @@ const CallFlows = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 bg-white/70 backdrop-blur-sm border border-gray-200 text-[#0C0A1D] rounded-lg font-semibold flex items-center gap-2 shadow-lg"
+            className="px-6 py-3 bg-gradient-to-br from-[#E42289] to-[#00FFFF] border-white/30 border text-[#F0F0F0] rounded-lg font-semibold flex items-center gap-2 shadow-lg"
           >
             <Play className="w-4 h-4" />
             Test Flow
@@ -71,9 +71,9 @@ const CallFlows = () => {
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg"
+          className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl p-6 shadow-lg"
         >
-          <h3 className="text-lg font-bold text-[#0C0A1D] mb-4">Node Library</h3>
+          <h3 className="text-lg font-bold text-white/90 mb-4">Node Library</h3>
           <div className="space-y-3">
             {nodeTypes.map((nodeType, index) => (
               <motion.button
@@ -82,7 +82,7 @@ const CallFlows = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 onClick={() => addNode(nodeType)}
-                className={`w-full p-3 rounded-lg bg-gradient-to-r ${nodeType.color} text-white font-semibold flex items-center gap-3 hover:shadow-lg transition-all duration-200`}
+                className={`w-full p-3 rounded-lg bg-gradient-to-r ${nodeType.color} text-white font-semibold flex items-center gap-3 my-20 hover:shadow-lg transition-all duration-200`}
               >
                 <nodeType.icon className="w-4 h-4" />
                 {nodeType.title}
@@ -94,22 +94,22 @@ const CallFlows = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-6 p-4 bg-white/80 rounded-lg border border-gray-200"
+              className="mt-6 p-4 bg-white/20 rounded-lg border border-white/20"
             >
-              <h4 className="font-semibold text-[#0C0A1D] mb-3">Node Settings</h4>
+              <h4 className="font-semibold text-white/90 mb-3">Node Settings</h4>
               <div className="space-y-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                  <label className="block text-sm font-medium text-[#F0F0F0]/80 mb-1">Title</label>
                   <input
                     type="text"
                     value={selectedNode.title}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289] text-sm"
+                    className="w-full px-3 py-2 bg-white/20 border-white/30 text-[#F0F0F0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289] text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289] text-sm">
-                    <option>{selectedNode.type}</option>
+                  <label className="block text-sm font-medium text-[#F0F0F0]/80 mb-1">Type</label>
+                  <select className="w-full px-3 py-2 bg-white/20 border-white/30 text-[#F0F0F0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289] text-sm">
+                    <option className="bg-white text-white">{selectedNode.type}</option>
                   </select>
                 </div>
                 <button className="w-full px-3 py-2 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600 transition-colors duration-200 flex items-center justify-center gap-2">
@@ -126,19 +126,19 @@ const CallFlows = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="lg:col-span-3 bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg overflow-hidden"
+          className="lg:col-span-3 bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl shadow-lg overflow-hidden"
         >
-          <div className="p-4 border-b border-gray-200 bg-gray-50">
-            <h3 className="text-lg font-bold text-[#0C0A1D]">Flow Canvas</h3>
+          <div className="p-4 border-b border-white/20 bg-white/20">
+            <h3 className="text-lg font-bold text-white/90">Flow Canvas</h3>
           </div>
           
-          <div className="relative h-[600px] bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
+          <div className="relative h-[600px] bg-rgba(12, 10, 29, 0.8) overflow-hidden">
             {/* Grid Background */}
-            <div className="absolute inset-0 opacity-20">
+            <div className="absolute inset-0">
               <svg width="100%" height="100%">
                 <defs>
                   <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#E5E7EB" strokeWidth="1"/>
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="white" strokeOpacity="0.1" strokeWidth="1"/>
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#grid)" />
@@ -199,7 +199,7 @@ const CallFlows = () => {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`absolute w-24 h-12 rounded-lg bg-gradient-to-r ${nodeType?.color} text-white text-xs font-semibold flex items-center justify-center cursor-pointer shadow-lg hover:shadow-xl transition-all duration-200 ${
+                  className={`absolute w-24 h-12 rounded-lg bg-gradient-to-r ${nodeType?.color} text-white text-xs font-semibold flex items-center justify-center  cursor-pointer shadow-lg hover:shadow-xl transition-all duration-200 ${
                     selectedNode?.id === node.id ? 'ring-2 ring-white ring-offset-2' : ''
                   }`}
                   style={{ left: node.x, top: node.y }}
@@ -220,8 +220,8 @@ const CallFlows = () => {
             {/* Instructions */}
             {nodes.length === 0 && (
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center text-gray-500">
-                  <GitBranch className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                <div className="text-center text-white/60">
+                  <GitBranch className="w-12 h-12 mx-auto mb-3 text-white/30" />
                   <p className="text-lg font-medium">Start Building Your Flow</p>
                   <p className="text-sm">Drag nodes from the library to create your call flow</p>
                 </div>

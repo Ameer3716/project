@@ -1,3 +1,43 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@keyframes subtle-pulse {
+    50% {
+      opacity: 0.7; /* A slightly less aggressive pulse than 0.5 */
+    }
+  }
+  
+  /* 2. Utility class to apply the pulse animation */
+  .animate-subtle-pulse {
+    animation: subtle-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  /* 3. CSS for the animated gradient border effect */
+  .animated-border-container {
+    position: relative;
+    padding: 3px; /* This padding creates the border thickness */
+    overflow: hidden;
+    border-radius: 12px; /* Match the inner content's border-radius */
+  }
+  
+  /* The rotating gradient background */
+  .animated-border-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(
+      from 180deg at 50% 50%,
+      #e42289 0deg,
+      #00ffff 180deg,
+      #e42289 360deg
+    );
+    z-index: 1;
+  }
+  
+  /* The actual content sits on top */
+  .animated-border-content {
+    position: relative;
+    z-index: 2;
+    background-color: #1a1a2e; /* A slightly different dark color to make it pop */
+    border-radius: 10px; /* Slightly smaller radius than the container */
+  }

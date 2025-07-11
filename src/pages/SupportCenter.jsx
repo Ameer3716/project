@@ -50,19 +50,19 @@ const SupportCenter = () => {
 
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case 'high': return 'bg-red-100 text-red-800';
-      case 'medium': return 'bg-yellow-100 text-yellow-800';
-      case 'low': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'high': return 'bg-red-500/20 text-red-300';
+      case 'medium': return 'bg-yellow-500/20 text-yellow-300';
+      case 'low': return 'bg-green-500/20 text-green-300';
+      default: return 'bg-gray-500/20 text-gray-300';
     }
   };
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'open': return 'bg-blue-100 text-blue-800';
-      case 'in-progress': return 'bg-yellow-100 text-yellow-800';
-      case 'resolved': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'open': return 'bg-blue-500/20 text-blue-300';
+      case 'in-progress': return 'bg-yellow-500/20 text-yellow-300';
+      case 'resolved': return 'bg-green-500/20 text-green-300';
+      default: return 'bg-gray-500/20 text-gray-300';
     }
   };
 
@@ -105,22 +105,22 @@ const SupportCenter = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.1 }}
-            className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-200"
+            className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-200"
           >
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-lg flex items-center justify-center">
                 <channel.icon className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="font-semibold text-[#0C0A1D]">{channel.title}</h3>
+                <h3 className="font-semibold text-white/90">{channel.title}</h3>
                 <div className="flex items-center gap-1">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span className="text-xs text-green-600">Available</span>
+                  <span className="text-xs text-green-300">Available</span>
                 </div>
               </div>
             </div>
             
-            <p className="text-sm text-gray-600 mb-4">{channel.description}</p>
+            <p className="text-sm text-[#F0F0F0]/80 mb-4">{channel.description}</p>
             
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -134,7 +134,7 @@ const SupportCenter = () => {
       </motion.div>
 
       {/* Tabs */}
-      <div className="flex space-x-1 bg-white/50 backdrop-blur-sm rounded-lg p-1">
+      <div className="flex space-x-1 bg-black/20 backdrop-blur-sm rounded-lg p-1 border border-white/20">
         {['tickets', 'knowledge-base', 'new-ticket'].map((tab) => (
           <button
             key={tab}
@@ -142,7 +142,7 @@ const SupportCenter = () => {
             className={`flex-1 py-2 px-4 rounded-md font-medium transition-all duration-200 capitalize ${
               activeTab === tab
                 ? 'bg-gradient-to-r from-[#E42289] to-[#00FFFF] text-white shadow-lg'
-                : 'text-gray-600 hover:text-[#0C0A1D]'
+                : 'text-[#F0F0F0]/70 hover:text-white'
             }`}
           >
             {tab.replace('-', ' ')}
@@ -154,36 +154,36 @@ const SupportCenter = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg overflow-hidden"
+          className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl shadow-lg overflow-hidden"
         >
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="text-xl font-bold text-[#0C0A1D]">Support Tickets</h3>
+          <div className="p-6 border-b border-white/20">
+            <h3 className="text-xl font-bold text-white/90">Support Tickets</h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50">
+              <thead className="bg-black/20">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ticket</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agent</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Ticket</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Priority</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Created</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Agent</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-white/70 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-white/20">
                 {supportTickets.map((ticket, index) => (
                   <motion.tr
                     key={ticket.id}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="hover:bg-white/50 transition-colors duration-200"
+                    className="hover:bg-white/10 transition-colors duration-200"
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
-                        <div className="text-sm font-medium text-gray-900">#{ticket.id}</div>
-                        <div className="text-sm text-gray-500">{ticket.subject}</div>
+                        <div className="text-sm font-medium text-[#F0F0F0]">#{ticket.id}</div>
+                        <div className="text-sm text-[#F0F0F0]/70">{ticket.subject}</div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -197,14 +197,14 @@ const SupportCenter = () => {
                         {ticket.status}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#F0F0F0]/90">
                       {ticket.created}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#F0F0F0]/90">
                       {ticket.agent}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button className="text-[#E42289] hover:text-[#00FFFF] transition-colors duration-200">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white/80">
+                      <button className="text-[white] hover:text-[#00FFFF] transition-colors duration-200">
                         View Details
                       </button>
                     </td>
@@ -220,9 +220,9 @@ const SupportCenter = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg"
+          className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl p-6 shadow-lg"
         >
-          <h3 className="text-xl font-bold text-[#0C0A1D] mb-6">Knowledge Base</h3>
+          <h3 className="text-xl font-bold text-white/90 mb-6">Knowledge Base</h3>
           <div className="space-y-4">
             {knowledgeBase.map((article, index) => (
               <motion.div
@@ -230,12 +230,12 @@ const SupportCenter = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="flex items-center justify-between p-4 bg-white/50 rounded-lg hover:bg-white/80 transition-all duration-200 cursor-pointer"
+                className="flex items-center justify-between p-4 bg-black/20 rounded-lg hover:bg-black/40 transition-all duration-200 cursor-pointer"
               >
                 <div className="flex-1">
-                  <h4 className="font-semibold text-[#0C0A1D] mb-1">{article.title}</h4>
-                  <div className="flex items-center gap-4 text-sm text-gray-600">
-                    <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
+                  <h4 className="font-semibold text-white/90 mb-1">{article.title}</h4>
+                  <div className="flex items-center gap-4 text-sm text-[#F0F0F0]/70">
+                    <span className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs">
                       {article.category}
                     </span>
                     <span>{article.views} views</span>
@@ -254,42 +254,42 @@ const SupportCenter = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg"
+          className="bg-rgba(22, 21, 48, 0.6) backdrop-blur-[12px] border border-white/20 rounded-xl p-6 shadow-lg"
         >
-          <h3 className="text-xl font-bold text-[#0C0A1D] mb-6">Create New Support Ticket</h3>
+          <h3 className="text-xl font-bold text-white/90 mb-6">Create New Support Ticket</h3>
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+              <label className="block text-sm font-medium text-[#F0F0F0]/80 mb-2">Subject</label>
               <input
                 type="text"
                 value={newTicket.subject}
                 onChange={(e) => setNewTicket(prev => ({ ...prev, subject: e.target.value }))}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289]"
+                className="w-full px-4 py-2 bg-white/80 border border-white/30  text-[#F0F0F0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289]"
                 placeholder="Brief description of your issue"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+              <label className="block text-sm font-medium text-[#F0F0F0]/80 mb-2">Priority</label>
               <select
                 value={newTicket.priority}
                 onChange={(e) => setNewTicket(prev => ({ ...prev, priority: e.target.value }))}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289]"
+                className="w-full px-4 py-2 bg-white/80 border border-white/30 text-[#F0F0F0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289]"
               >
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-                <option value="urgent">Urgent</option>
+                <option className="bg-gray-800 text-white" value="low">Low</option>
+                <option className="bg-gray-800 text-white" value="medium">Medium</option>
+                <option className="bg-gray-800 text-white" value="high">High</option>
+                <option className="bg-gray-800 text-white" value="urgent">Urgent</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+              <label className="block text-sm font-medium text-[#F0F0F0]/80 mb-2">Description</label>
               <textarea
                 value={newTicket.description}
                 onChange={(e) => setNewTicket(prev => ({ ...prev, description: e.target.value }))}
                 rows={6}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289] resize-none"
+                className="w-full px-4 py-2 bg-white/80 border border-white/30 text-[#F0F0F0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E42289] resize-none"
                 placeholder="Please provide detailed information about your issue..."
               />
             </div>
@@ -304,7 +304,7 @@ const SupportCenter = () => {
               </motion.button>
               <button
                 onClick={() => setNewTicket({ subject: '', priority: 'medium', description: '' })}
-                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                className="px-6 py-3 border border-white/30 text-[#F0F0F0]/80 rounded-lg hover:bg-black/20 transition-colors duration-200"
               >
                 Clear
               </button>
