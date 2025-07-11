@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Calendar, Clock, Users, TrendingUp, Activity, Zap, Brain } from 'lucide-react';
-import { AuthContext } from '../Contexts/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 const DashboardOverview = () => {
   const { user } = useContext(AuthContext);
