@@ -95,7 +95,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-20">
 
           {/* Logo */}
-          <Link to="/" onClick={closeMenu} className="flex items-center space-x-3 mx-auto lg:mx-0">
+          <Link to="/" onClick={closeMenu} className="flex items-center space-x-3">
             <motion.div
               className="w-10 h-10 bg-gradient-to-r from-[#E42289] to-[#00FFFF] rounded-xl flex items-center justify-center"
               whileHover={{ scale: 1.1, rotate: 5 }}
