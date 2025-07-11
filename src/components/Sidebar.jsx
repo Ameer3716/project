@@ -17,7 +17,7 @@ import {
   Zap
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { AuthContext } from '../Contexts/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 const Sidebar = ({ onNavigate }) => {
   const location = useLocation();
