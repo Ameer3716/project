@@ -1,6 +1,6 @@
 import React, { useState, useEffect,useContext } from "react";
 import { Button, Input, notification, Badge, Card, Space, Typography, Tag } from "antd";
-import { AuthContext } from "../Contexts/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 import {
   PhoneOutlined,
   PoweroffOutlined,

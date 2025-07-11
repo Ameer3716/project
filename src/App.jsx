@@ -1,7 +1,7 @@
 // src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate,useLocation} from 'react-router-dom';
-import { AuthProvider } from './Contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 // Hooks and General Components
 import useSmoothScroll from '../hooks/useSmoothScroll';
