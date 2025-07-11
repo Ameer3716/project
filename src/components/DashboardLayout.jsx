@@ -129,9 +129,9 @@ const DashboardLayout = () => {
             w-80 h-screen lg:h-auto
             ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
           `}
-          initial={{ x: -320 }}
-          animate={{ x: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          // REMOVED: The conflicting initial, animate, and transition props.
+          // The sidebar's position is now correctly controlled by the conditional
+          // Tailwind CSS classes above, which works with the `transition-transform` class.
         >
           <Sidebar onNavigate={() => setIsSidebarOpen(false)} />
         </motion.div>
